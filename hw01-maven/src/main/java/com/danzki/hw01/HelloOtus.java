@@ -30,12 +30,15 @@ public class HelloOtus {
     private static final int MAX_PIN_LENGTH = 4;
 
     private int maxCount = 1000;
+
     private boolean isRepeated = true;
     private List<String> pinsToReturn = Lists.newArrayList();
+
 
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
+
 
     public void setRepeated(boolean repeated) {
         isRepeated = repeated;
@@ -64,6 +67,7 @@ public class HelloOtus {
         //for (int i = min; i < max; i++) {
         while (true) {
             boolean repeat = false;
+
             String pin = generatePin();
             for (int j = 0; j < pin.length(); j++) {
                 char c = pin.charAt(j);
@@ -106,7 +110,6 @@ public class HelloOtus {
 
 
     public static void main(String[] args) {
-
         HelloOtus ho = new HelloOtus();
 
         String s;
@@ -152,6 +155,5 @@ public class HelloOtus {
         System.out.println("Quantity of pins " +
                             (ho.isRepeated ? "with repeated digits " : "without repeated digits ") +
                             pins.size());
-
     }
 }
