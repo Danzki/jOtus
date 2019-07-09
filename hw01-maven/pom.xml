@@ -13,6 +13,8 @@
     <artifactId>hw01-maven</artifactId>
     <name>HW01-maven</name>
 
+    <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -20,14 +22,11 @@
         </dependency>
     </dependencies>
 
-    <packaging>jar</packaging>
-
     <build>
         <finalName>${project.name}</finalName>
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
@@ -51,7 +50,5 @@
             </plugin>
         </plugins>
     </build>
-
-
 
 </project>
