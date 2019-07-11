@@ -30,15 +30,11 @@ public class HelloOtus {
     private static final int MAX_PIN_LENGTH = 4;
 
     private int maxCount = 1000;
-
     private boolean isRepeated = true;
     private List<String> pinsToReturn = Lists.newArrayList();
-
-
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
-
 
     public void setRepeated(boolean repeated) {
         isRepeated = repeated;
