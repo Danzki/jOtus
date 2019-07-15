@@ -7,7 +7,7 @@ import java.util.*;
 public class DIYarrayList<T> implements List<T> {
 
     private int size;
-    Object[] elementData;
+    private Object[] elementData;
 
     //copied from ArrayList
     private static final Object[] EMPTY_ELEMENTDATA = {};
