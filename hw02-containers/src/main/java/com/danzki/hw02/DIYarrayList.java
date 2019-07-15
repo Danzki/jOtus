@@ -14,21 +14,22 @@ public class DIYarrayList<T> implements List<T> {
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     private static final int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_EMPTY_SIZE = 0;
 
     public DIYarrayList() {
         this.elementData = EMPTY_ELEMENTDATA;
-        this.size = DEFAULT_SIZE;
+        this.size = DEFAULT_EMPTY_SIZE;
     }
 
-    public DIYarrayList(int size) {
-        if (size > 0) {
-            this.elementData = new Object[size];
+    public DIYarrayList(int capacity) {
+        if (capacity > 0) {
+            this.elementData = new Object[capacity];
         }
-        else if (size == 0) {
+        else if (capacity == 0) {
             this.elementData = EMPTY_ELEMENTDATA;
         }
         else {
-            throw new IllegalArgumentException("Illegal capacity " + size);
+            throw new IllegalArgumentException("Illegal capacity " + capacity);
         }
 
     }
@@ -49,7 +50,7 @@ public class DIYarrayList<T> implements List<T> {
     public boolean add(T t) {
         ensureCapacity(this.size + 1);
         this.elementData[this.size++] = t;
-        return (this.size == 0) ? false : true;
+        return true;
     }
     
     private int newCapacity(int minCapacity) {
@@ -60,7 +61,7 @@ public class DIYarrayList<T> implements List<T> {
             throw new OutOfMemoryError();
         }
 
-        return Math.max(newCapacity, MAX_ARRAY_SIZE);
+        return (newCapacity - MAX_ARRAY_SIZE < 0) ? newCapacity : MAX_ARRAY_SIZE;
     }
 
     private class Itr implements ListIterator {
@@ -137,10 +138,7 @@ public class DIYarrayList<T> implements List<T> {
 
     @Override
     public T set(int index, T element) {
-        if (index > size) {
-            throw new IndexOutOfBoundsException();
-        }
-        if (index < 0) {
+        if (index > size || index < 0) {
             throw new IndexOutOfBoundsException();
         }
         T oldValue = (T) elementData[index];

@@ -13,20 +13,21 @@ public class Containers {
         //Проверить, что на ней работают методы из java.util.Collections:
         //Collections.addAll(Collection<? super T> c, T... elements)
         List<Applications> apps = new DIYarrayList<>(arrSize);
-        List<Applications> copyOfApps = new DIYarrayList<>(arrSize);
+        Applications[] appArray = {};
         for(int i = 0; i < arrSize; i++) {
-            Collections.addAll(apps,
-                            new Applications("App"+i, "Software", 60));
+            appArray[i] = new Applications("App"+i, "Software", 60);
 
-            Collections.addAll(copyOfApps,
-                    new Applications("Empty"+i, "Empty", 60));
         }
+        Collections.addAll(apps, appArray);
+        System.out.println("Application array size is "+apps.size());
 
         //Collections.static <T> void copy(List<? super T> dest, List<? extends T> src)
+        List<Applications> copyOfApps = new DIYarrayList<>(arrSize);
         Collections.copy(copyOfApps, apps);
+        System.out.println("Copy of Application array size is"+apps.size());
 
         //Collections.static <T> void sort(List<T> list, Comparator<? super T> c)
         Collections.sort(apps, Applications.Comparators.APPNAME);
-
+        
     }
 }
