@@ -32,6 +32,7 @@ public class HelloOtus {
     private int maxCount = 1000;
     private boolean isRepeated = true;
     private List<String> pinsToReturn = Lists.newArrayList();
+
     public void setMaxCount(int maxCount) {
         this.maxCount = maxCount;
     }
@@ -63,7 +64,6 @@ public class HelloOtus {
         //for (int i = min; i < max; i++) {
         while (true) {
             boolean repeat = false;
-
             String pin = generatePin();
             for (int j = 0; j < pin.length(); j++) {
                 char c = pin.charAt(j);
@@ -107,7 +107,6 @@ public class HelloOtus {
 
     public static void main(String[] args) {
         HelloOtus ho = new HelloOtus();
-
         String s;
         Scanner sc = new Scanner(System.in);
         int count = 0;
