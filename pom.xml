@@ -26,20 +26,73 @@
     </modules>
 
     <properties>
+        <!--region General-->
+        <exec.mainClass>com.danzki.hw01.HelloOtus</exec.mainClass>
+        <revision>2019-06-SNAPSHOT</revision>
+        <java.version>12</java.version>
+        <minimal.maven.version>3.5.0</minimal.maven.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--endregion-->
+
+        <!--region Libs -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <com.google.guava.version>28.0-jre</com.google.guava.version>
+        <commons-io.version>2.6</commons-io.version>
+        <annotations.version>17.0.0</annotations.version>
+        <!--endregion-->
+
+        <!--region test libs-->
+        <jmh-core.version>1.21</jmh-core.version>
+        <mockito-all.version>2.0.2-beta</mockito-all.version>
+        <!--endregion-->
+
+        <!--region Plugins-->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+        <maven-assembly-plugin.descriptorSuffix>jar-with-dependencies</maven-assembly-plugin.descriptorSuffix>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
+        <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+        <exec.executable>java</exec.executable>
+        <jar.name>${project.name}-${revision}</jar.name>
+        <!--endregion-->
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--region test-->
+            <dependency>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-core</artifactId>
+              <version>${jmh-core.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>org.openjdk.jmh</groupId>
+              <artifactId>jmh-generator-annprocess</artifactId>
+              <version>${jmh-core.version}</version>
+              <scope>provided</scope>
+            </dependency>
+            <dependency>
+              <groupId>org.mockito</groupId>
+              <artifactId>mockito-all</artifactId>
+              <version>${mockito-all.version}</version>
+              <scope>test</scope>
+            </dependency>
+            <!--endregion-->
+
+            <!--region libs-->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${com.google.guava.version}</version>
             </dependency>
+            <!--endregion-->
         </dependencies>
     </dependencyManagement>
 
