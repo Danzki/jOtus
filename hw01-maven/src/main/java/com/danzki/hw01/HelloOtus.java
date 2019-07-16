@@ -106,9 +106,7 @@ public class HelloOtus {
 
 
     public static void main(String[] args) {
-
         HelloOtus ho = new HelloOtus();
-
         String s;
         Scanner sc = new Scanner(System.in);
         int count = 0;
@@ -152,6 +150,5 @@ public class HelloOtus {
         System.out.println("Quantity of pins " +
                             (ho.isRepeated ? "with repeated digits " : "without repeated digits ") +
                             pins.size());
-
     }
 }
