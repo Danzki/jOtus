@@ -11,19 +11,7 @@ import java.lang.reflect.Method;
 
 public class TestRunner {
 
-  public static void main(String[] args)
-      throws MyTestFrameworkException {
-
-    Class<?> aClass = null;
-    if (args.length > 0) {
-      try {
-        aClass = Class.forName(args[0]);
-      } catch (ClassNotFoundException e) {
-        System.out.println("Wrong class name.");
-        e.printStackTrace();
-      }
-    }
-
+  public static void run(Class<?> aClass) throws MyTestFrameworkException {
     TestingEnv testingEnv = new TestingEnv(aClass);
     int failTests = 0;
     int successTests = 0;
@@ -51,5 +39,27 @@ public class TestRunner {
     System.out.println("Statistic of running of " + (successTests + failTests) + " tests:");
     System.out.println("Successful tests: " + successTests);
     System.out.println("Failed tests: " + failTests);
+
+
+  }
+
+  public static void main(String[] args) {
+    Class<?> aClass = null;
+    if (args.length > 0) {
+      try {
+        aClass = Class.forName(args[0]);
+      } catch (ClassNotFoundException e) {
+        System.out.println("Wrong class name.");
+        e.printStackTrace();
+      }
+    }
+
+    if (aClass != null) {
+      try {
+        run(aClass);
+      } catch (MyTestFrameworkException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }
