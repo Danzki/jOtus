@@ -1,59 +1,38 @@
 package com.danzki.hw03;
 
-import com.danzki.hw03.TestingEnvironment.After;
-import com.danzki.hw03.TestingEnvironment.Before;
-import com.danzki.hw03.TestingEnvironment.Test;
+import com.danzki.hw03.TestingEnvironment.annotations.After;
+import com.danzki.hw03.TestingEnvironment.annotations.Before;
+import com.danzki.hw03.TestingEnvironment.annotations.Test;
+import static org.assertj.core.api.Assertions.*;
 
 public class PersonTest {
 
   @Before
   static void beforeTest() {
-    System.out.println("Some text before every test.");
+    System.out.println("Methods BEFORE every test.");
   }
 
   @Test
   static void testFirstName() {
-//    assertThat(new Person("Dan", "Kapustin", 35).getFirstName())
-//            .contains("Dan");
-    Person person = new Person("Dan", "Kapustin", 35);
-
-    if (!person.getFirstName().contains("Dan")) {
-      throw new IllegalArgumentException();
-    } else {
-      System.out.println("Test FirstName is succesful.");
-    }
-
+    assertThat(new Person("Dan", "Kapustin", 35).getFirstName())
+            .contains("Dan");
   }
 
   @Test
   static void testLastName() {
-//    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
-//        .contains("Kapustin");
-    Person person = new Person("Dan", "Kapustin", 35);
-    if (!person.getLastName().contains("Kapustin")) {
-      throw new IllegalArgumentException();
-    } else {
-      System.out.println("Test LastName is succesful.");
-    }
-
+    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
+        .contains("Petrov");
   }
 
   @Test
   static void testFullName() {
-//    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
-//        .contains("Kapustin");
-    Person person = new Person("Dan", "Kapustin", 35);
-    if (!person.getFullName().contains("Dan Kapustin")) {
-      throw new IllegalArgumentException();
-    } else {
-      System.out.println("Test FullName is succesful.");
-    }
-
+    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
+        .contains("Kapustin");
   }
 
   @After
   static void afterTest() {
-    System.out.println("Some text after every test.");
+    System.out.println("Methods AFTER every test.");
   }
 
 }

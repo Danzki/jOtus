@@ -1,4 +1,4 @@
-package com.danzki.hw03.TestingEnvironment;
+package com.danzki.hw03.TestingEnvironment.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
