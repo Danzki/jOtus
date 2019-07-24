@@ -75,4 +75,35 @@ public class TestingEnv {
     }
   }
 
+  public static void run(Class<?> aClass) throws MyTestFrameworkException {
+    TestingEnv testingEnv = new TestingEnv(aClass);
+    int failTests = 0;
+    int successTests = 0;
+
+    for (Method method : testingEnv.getMethodsByAnnotation(Test.class)) {
+      try {
+        Object instance = testingEnv.getaClass().getDeclaredConstructor().newInstance();
+        //запустить все методы Before
+        testingEnv.executeMethods(instance, Before.class);
+        //запустить один метод Test
+        method.setAccessible(true);
+        method.invoke(instance);
+        successTests++;
+        System.out.println(method.getName() + ": Successful test");
+        //запустить все метода After
+        testingEnv.executeMethods(instance, After.class);
+      } catch (IllegalAccessException | IllegalArgumentException |
+          InvocationTargetException | NoSuchMethodException | SecurityException |
+          InstantiationException e) {
+        failTests++;
+        System.out.println(method.getName() + ": Test failed.");
+      } finally {
+        method.setAccessible(false);
+      }
+    }
+    System.out.println("Statistic of running of " + (successTests + failTests) + " tests:");
+    System.out.println("Successful tests: " + successTests);
+    System.out.println("Failed tests: " + failTests);
+  }
+
 }
