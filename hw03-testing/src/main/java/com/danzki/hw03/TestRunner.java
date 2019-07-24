@@ -11,38 +11,6 @@ import java.lang.reflect.Method;
 
 public class TestRunner {
 
-  public static void run(Class<?> aClass) throws MyTestFrameworkException {
-    TestingEnv testingEnv = new TestingEnv(aClass);
-    int failTests = 0;
-    int successTests = 0;
-
-    for (Method method : testingEnv.getMethodsByAnnotation(Test.class)) {
-      try {
-        Object instance = testingEnv.getaClass().getDeclaredConstructor().newInstance();
-        //запустить все методы Before
-        testingEnv.executeMethods(instance, Before.class);
-        //запустить один метод Test
-        method.setAccessible(true);
-        method.invoke(instance);
-        successTests++;
-        //запустить все метода After
-        testingEnv.executeMethods(instance, After.class);
-      } catch (IllegalAccessException | IllegalArgumentException |
-          InvocationTargetException | NoSuchMethodException | SecurityException |
-          InstantiationException e) {
-        failTests++;
-      } finally {
-        method.setAccessible(false);
-      }
-    }
-
-    System.out.println("Statistic of running of " + (successTests + failTests) + " tests:");
-    System.out.println("Successful tests: " + successTests);
-    System.out.println("Failed tests: " + failTests);
-
-
-  }
-
   public static void main(String[] args) {
     Class<?> aClass = null;
     if (args.length > 0) {
@@ -56,7 +24,8 @@ public class TestRunner {
 
     if (aClass != null) {
       try {
-        run(aClass);
+        TestingEnv testingEnv = new TestingEnv(aClass);
+        testingEnv.run(aClass);
       } catch (MyTestFrameworkException e) {
         e.printStackTrace();
       }
