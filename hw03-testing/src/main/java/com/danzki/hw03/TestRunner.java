@@ -24,8 +24,7 @@ public class TestRunner {
 
     if (aClass != null) {
       try {
-        TestingEnv testingEnv = new TestingEnv(aClass);
-        testingEnv.run(aClass);
+        TestingEnv.run(aClass);
       } catch (MyTestFrameworkException e) {
         e.printStackTrace();
       }
