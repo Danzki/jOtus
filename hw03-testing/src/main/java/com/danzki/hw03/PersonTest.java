@@ -6,6 +6,7 @@ import com.danzki.hw03.TestingEnvironment.annotations.Test;
 import static org.assertj.core.api.Assertions.*;
 
 public class PersonTest {
+  private static Person person = new Person("Dan", "Kapustin", 35);
 
   @Before
   static void beforeTest() {
@@ -14,20 +15,29 @@ public class PersonTest {
 
   @Test
   static void testFirstName() {
-    assertThat(new Person("Dan", "Kapustin", 35).getFirstName())
-            .contains("Dan");
+    String expectedValue = "Dan";
+    assertThat(person.getFirstName())
+        .withFailMessage("Wrong Last name. " +
+            "Expected - " + expectedValue + ", given - " + person.getFirstName())
+        .contains(expectedValue);
   }
 
   @Test
   static void testLastName() {
-    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
-        .contains("Petrov");
+    String expectedValue = "Petrov";
+    assertThat(person.getLastName())
+        .withFailMessage("Wrong Last name. " +
+            "Expected - " + expectedValue + ", given - " + person.getLastName())
+        .contains(expectedValue);
   }
 
   @Test
   static void testFullName() {
-    assertThat(new Person("Dan", "Kapustin", 35).getLastName())
-        .contains("Kapustin");
+    String expectedValue = "Dan Kapustin";
+    assertThat(person.getFullName())
+        .withFailMessage("Wrong Last name. " +
+            "Expected - " + expectedValue + ", given - " + person.getFullName())
+        .contains(expectedValue);
   }
 
   @After
