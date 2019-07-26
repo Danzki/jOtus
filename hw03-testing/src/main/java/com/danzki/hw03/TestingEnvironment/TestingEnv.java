@@ -61,17 +61,22 @@ public class TestingEnv {
     return annoMethods;
   }
 
-  public void executeMethods(Object obj, Class<? extends Annotation> annotation)
+  private static void executeSingleTest(Object instance, Method method)
+      throws MyTestFrameworkException {
+    try {
+      method.setAccessible(true);
+      method.invoke(instance);
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      throw new MyTestFrameworkException(e);
+    } finally {
+      method.setAccessible(false);
+    }
+  }
+
+  public void executeAllMethods(Object obj, Class<? extends Annotation> annotation)
       throws MyTestFrameworkException {
     for (Method method : getMethodsByAnnotation(annotation)) {
-      try {
-        method.setAccessible(true);
-        method.invoke(obj);
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        throw new MyTestFrameworkException(e);
-      } finally {
-        method.setAccessible(false);
-      }
+      executeSingleTest(obj, method);
     }
   }
 
@@ -83,20 +88,16 @@ public class TestingEnv {
     for (Method method : testingEnv.getMethodsByAnnotation(Test.class)) {
       try {
         Object instance = testingEnv.getaClass().getDeclaredConstructor().newInstance();
-        //запустить все методы Before
-        testingEnv.executeMethods(instance, Before.class);
-        //запустить один метод Test
-        method.setAccessible(true);
-        method.invoke(instance);
+        testingEnv.executeAllMethods(instance, Before.class);
+        executeSingleTest(instance, method);
         successTests++;
         System.out.println(method.getName() + ": Successful test");
-        //запустить все метода After
-        testingEnv.executeMethods(instance, After.class);
+        testingEnv.executeAllMethods(instance, After.class);
       } catch (IllegalAccessException | IllegalArgumentException |
           InvocationTargetException | NoSuchMethodException | SecurityException |
           InstantiationException e) {
         failTests++;
-        System.out.println(method.getName() + ": Test failed.");
+        System.out.println(method.getName() + ": Test failed. ");
       } finally {
         method.setAccessible(false);
       }
