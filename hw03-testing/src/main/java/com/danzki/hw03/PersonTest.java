@@ -3,11 +3,9 @@ package com.danzki.hw03;
 import com.danzki.hw03.TestingEnvironment.annotations.After;
 import com.danzki.hw03.TestingEnvironment.annotations.Before;
 import com.danzki.hw03.TestingEnvironment.annotations.Test;
-
 import static org.assertj.core.api.Assertions.*;
 
 public class PersonTest {
-
   private static Person person = new Person("Dan", "Kapustin", 35);
 
   @Before
