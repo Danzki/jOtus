@@ -3,8 +3,6 @@ package com.danzki.hw04;
 import com.danzki.hw04.Annotations.Log;
 import com.danzki.hw04.Interfaces.ApplicationInterface;
 
-import java.util.List;
-
 public class ApplicationImpl implements ApplicationInterface {
 
   public ApplicationImpl() {
