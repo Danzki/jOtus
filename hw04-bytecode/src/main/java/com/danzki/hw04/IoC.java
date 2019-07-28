@@ -1,5 +1,6 @@
 package com.danzki.hw04;
 
+import com.danzki.hw04.Annotations.Log;
 import com.danzki.hw04.Interfaces.ApplicationInterface;
 
 import java.lang.reflect.InvocationHandler;
@@ -22,12 +23,14 @@ public class IoC {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-      System.out.print("executed method:" + method.getName() + ", ");
-      int c = 0;
-      for (Object arg : args) {
-        System.out.print("arg" + c++ + ": " + arg);
+      if (method.isAnnotationPresent(Log.class)) {
+        System.out.print("executed method:" + method.getName() + ", ");
+        int c = 0;
+        for (Object arg : args) {
+          System.out.print("arg" + c++ + ": " + arg);
+        }
+        System.out.println("");
       }
-      System.out.println("");
       return method.invoke(appClass, args);
     }
   }
