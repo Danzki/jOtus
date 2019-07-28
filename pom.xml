@@ -24,6 +24,7 @@
     <module>hw01-maven</module>
     <module>hw02-containers</module>
     <module>hw03-testing</module>
+    <module>hw04-bytecode</module>
   </modules>
 
   <properties>
