@@ -29,13 +29,15 @@
 
   <properties>
 
-    <!--region General-->
-    <exec.mainClass>com.danzki.hw03.TestingEnvironment.TestingEnv</exec.mainClass>
+  <!--region General-->
+    <exec.mainClass>com.danzki.hw04.aop.runner</exec.mainClass>
+    <jar.name>${project.name}-${revision}</jar.name>
     <revision>2019-06-SNAPSHOT</revision>
     <java.version>12</java.version>
-    <minimal.maven.version>3.3.9</minimal.maven.version>
+    <minimal.maven.version>3.5.0</minimal.maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <asm.version>7.1</asm.version>
     <!--endregion-->
 
     <!--region BOMs -->
@@ -54,7 +56,7 @@
     <lombok.version>1.18.8</lombok.version>
     <!--endregion-->
 
-    <!--region hw03 - JUnit, AssertJ, Mockito, Hacrest -->
+    <!--region testing - JUnit, AssertJ, Mockito, Hacrest -->
     <junit-jupiter.version>5.3.2</junit-jupiter.version>
     <assertj.version>3.12.2</assertj.version>
     <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
@@ -117,6 +119,7 @@
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
       </dependency>
+      <!--endregion-->
 
       <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne) -->
       <dependency>
@@ -306,7 +309,7 @@
               <configuration>
                 <transformers>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>com.danzki.hw03-testing.TestRunner</mainClass>
+                    <mainClass>com.danzki.hw04-bytecode.runner</mainClass>
                   </transformer>
                 </transformers>
               </configuration>

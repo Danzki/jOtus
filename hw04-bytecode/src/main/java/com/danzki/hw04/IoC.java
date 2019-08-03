@@ -16,7 +16,7 @@ public class IoC {
         handler);
   }
 
-  static class MyInvocationHandler implements InvocationHandler {
+  private final static class MyInvocationHandler implements InvocationHandler {
     Object appClass;
     HashSet<String> methods;
 
