@@ -18,8 +18,6 @@ import java.util.Map;
 
 public class runner {
   public static void main(String... args) throws Exception {
-    GcInfoCollector youngInfo = new GcInfoCollector();
-    GcInfoCollector oldInfo = new GcInfoCollector();
     Map<String, GcInfoCollector> gc = new HashMap<>();
 
     System.out.println("Starting pid: " + ManagementFactory.getRuntimeMXBean().getName());
@@ -27,7 +25,7 @@ public class runner {
     long beginTime = System.currentTimeMillis();
 
     int size = 5 * 1000 * 1000;
-    int loopCounter = 100;
+    int loopCounter = 1000;
     MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
     ObjectName name = new ObjectName("com.danzki:type=runner");
 
@@ -36,7 +34,7 @@ public class runner {
     mbean.setSize(size);
     mbean.run();
 
-    String elapsedTime = "time:" + (System.currentTimeMillis() - beginTime) / 1000;
+    String elapsedTime = "Time: " + (System.currentTimeMillis() - beginTime) / 1000 + " seconds";
     List<String> gcRows = new ArrayList<>();
     gc.forEach((k, v) -> gcRows.add(k + ": count = " + v.getCount() + ", time = " + v.getTime() / 1000 + " seconds"));
 
@@ -46,7 +44,7 @@ public class runner {
     }
 
     try (PrintStream out = new PrintStream(new FileOutputStream("./out/" + args[0] + ".txt"))) {
-      out.println(args[0] + "info.");
+      out.println(args[0] + " info.");
       out.println(elapsedTime);
       for (String row : gcRows) {
         out.println(row);
