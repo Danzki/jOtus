@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class runner {
+public class Runner {
   public static void main(String... args) throws Exception {
     Map<String, GcInfoCollector> gc = new HashMap<>();
 
@@ -27,7 +27,7 @@ public class runner {
     int size = 5 * 1000 * 1000;
     int loopCounter = 1000;
     MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-    ObjectName name = new ObjectName("com.danzki:type=runner");
+    ObjectName name = new ObjectName("com.danzki:type=Runner");
 
     ObjectCreator mbean = new ObjectCreator(loopCounter);
     mbs.registerMBean(mbean, name);
@@ -36,14 +36,16 @@ public class runner {
 
     String elapsedTime = "Time: " + (System.currentTimeMillis() - beginTime) / 1000 + " seconds";
     List<String> gcRows = new ArrayList<>();
-    gc.forEach((k, v) -> gcRows.add(k + ": count = " + v.getCount() + ", time = " + v.getTime() / 1000 + " seconds"));
+    gc.forEach((k, v) -> gcRows.add(k + ": count = " + v.getCount() +
+        ", time = " + v.getTime() / 1000 + " seconds" +
+        ", max pause = " + v.getMaxPause() / 1000 + " seconds"));
 
     System.out.println(elapsedTime);
     for (String row : gcRows) {
       System.out.println(row);
     }
 
-    try (PrintStream out = new PrintStream(new FileOutputStream("./out/" + args[0] + ".txt"))) {
+    try (PrintStream out = new PrintStream(new FileOutputStream("./out/" + args[0] + "_" + args[1] + ".txt"))) {
       out.println(args[0] + " info.");
       out.println(elapsedTime);
       for (String row : gcRows) {
@@ -86,6 +88,7 @@ public class runner {
   private static void setGcInfo(GcInfoCollector gcInfo, String gcNamePattern, String gcName, long duration) {
     gcInfo.setCount(gcInfo.getCount() + 1);
     gcInfo.setTime(gcInfo.getTime() + duration);
+    gcInfo.setMaxPause(duration);
   }
 
   private static String keyByGenerationName(String name) {
