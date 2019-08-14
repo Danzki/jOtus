@@ -20,7 +20,7 @@ public class AtmTest {
   @Test
   @DisplayName("Current statement test.")
   void currentStatementTest() {
-    assertEquals(62000, atm.getCurrentStatement());
+    assertEquals(88000, atm.getCurrentStatement());
   }
 
   @AfterAll

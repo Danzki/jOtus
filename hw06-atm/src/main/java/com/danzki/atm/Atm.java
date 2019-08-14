@@ -14,22 +14,26 @@ public class Atm {
     return cells;
   }
 
+//  @SneakyThrows
   public Map<Integer, Integer> giveCash(int requestedAmount) throws IncorrectAmount {
     var givenBanknotes = new HashMap<Integer, Integer>();
     int amount = requestedAmount;
-    if (amount % getMinimalNominal() != 0 || amount > getCurrentStatement()) {
-      throw new IncorrectAmount("Amount cannot be issued.");
+    int minimalNominal = getMinimalNominal();
+    if (amount > getCurrentStatement()) {
+      throw new IncorrectAmount("Amount cannot be issue");
+    }
+    if (amount % minimalNominal != 0) {
+      throw new IncorrectAmount("Amount should be multiple of " + minimalNominal);
     }
     for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
       int nominal = cell.getKey().getNominal();
-      if (nominal <= requestedAmount) {
-        int banknotesCount = cell.getValue().getBanknotesCount(amount, nominal);
-        if (banknotesCount > 0) {
-          amount = amount % nominal;
-          givenBanknotes.put(nominal, banknotesCount);
-          if (amount == 0) {
-            break;
-          }
+      if (nominal <= amount) {
+        var command = new GiveCommand(cell.getValue(), amount, nominal);
+        int banknotesCount = command.execute();
+        amount = amount % nominal;
+        givenBanknotes.put(nominal, banknotesCount);
+        if (amount == 0) {
+          break;
         }
       }
     }
@@ -42,12 +46,12 @@ public class Atm {
 
   public void loadAtm() {
     cells = new TreeMap<>(Banknote.nominalComparator);
-    fillCell(Banknote.HUNDRED, 2500);
-    fillCell(Banknote.TWOHUNDRED, 2500);
-    fillCell(Banknote.FIVEHUNDRED, 2500);
-    fillCell(Banknote.THOUSAND, 2500);
-    fillCell(Banknote.TWOTHOUSAND, 2500);
-    fillCell(Banknote.FIVETHOUSAND, 2500);
+    fillCell(Banknote.HUNDRED, 10);
+    fillCell(Banknote.TWOHUNDRED, 10);
+    fillCell(Banknote.FIVEHUNDRED, 10);
+    fillCell(Banknote.THOUSAND, 10);
+    fillCell(Banknote.TWOTHOUSAND, 10);
+    fillCell(Banknote.FIVETHOUSAND, 10);
   }
 
   private void fillCell(Banknote banknote, int size) {
@@ -57,7 +61,8 @@ public class Atm {
   public int getCurrentStatement() {
     int statement = 0;
     for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
-      statement += cell.getValue().getStatement(cell.getKey().getNominal());
+      var command = new StatementCommand(cell.getValue(), cell.getKey().getNominal());
+      statement += command.execute();
     }
 
     return statement;
