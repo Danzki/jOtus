@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("ATM class tests:")
@@ -16,9 +14,7 @@ public class AtmTest {
   @BeforeEach
   void init() {
     atm = new Atm();
-    var loader = new LoaderJackson("./in/test");
-    List<Cell> cells = loader.loadCells();
-    atm.setCells(cells);
+    atm.loadAtm();
   }
 
   @Test

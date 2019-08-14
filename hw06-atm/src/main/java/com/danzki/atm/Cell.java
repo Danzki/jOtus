@@ -1,26 +1,29 @@
 package com.danzki.atm;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-@Setter
-@Getter
-@RequiredArgsConstructor
 public class Cell {
-  final int maxSize = 2500;
-  Integer nominal;
-  int size;
+  private int size;
 
-  public int getNominal() {
-    return nominal;
+  public Cell(int size) {
+    this.size = size;
   }
 
-  public boolean giveBanknotes(int banknotesCount) {
-    if (size < banknotesCount) {
+  public int getStatement(int nominal) {
+    return nominal * size;
+  }
+
+  public int getBanknotesCount(int requestedAmount, int nominal) {
+    int givenCount = requestedAmount / nominal;
+    if (giveBanknotes(givenCount)) {
+      return givenCount;
+    }
+    return 0;
+  }
+
+  public boolean giveBanknotes(int requestedCount) {
+    if (size < requestedCount) {
       return false;
     }
-    size -= banknotesCount;
+    size -= requestedCount;
     return true;
   }
 

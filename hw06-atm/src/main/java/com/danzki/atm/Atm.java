@@ -2,75 +2,64 @@ package com.danzki.atm;
 
 
 import com.danzki.atm.exceptions.IncorrectAmount;
-import com.danzki.atm.exceptions.NotEnoughCash;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
-@Getter
 public class Atm {
-  @Setter
-  List<Cell> cells;
+  private TreeMap<Banknote, Cell> cells;
 
-  @SneakyThrows
-  public Map<Integer, Integer> giveCash(int requestedAmount) {
+  public TreeMap<Banknote, Cell> getCells() {
+    return cells;
+  }
+
+  public Map<Integer, Integer> giveCash(int requestedAmount) throws IncorrectAmount {
+    var givenBanknotes = new HashMap<Integer, Integer>();
     int amount = requestedAmount;
-    Integer minNominal = getMinimalNominal();
-    if (amount % minNominal != 0) {
-      throw new IncorrectAmount("Amount cannot be issued. Please enter amount multiple to " + minNominal);
+    if (amount % getMinimalNominal() != 0 || amount > getCurrentStatement()) {
+      throw new IncorrectAmount("Amount cannot be issued.");
     }
-    if (amount > getCurrentStatement()) {
-      throw new NotEnoughCash("Amount cannot be issued. Not enough cash.");
-    }
-
-    Map<Integer, Integer> returnBanknotes = new HashMap<>();
-    List<Integer> nominals = getNominals();
-    Collections.reverse(nominals);
-    for (Integer nominal : nominals) {
-      if (amount >= nominal) {
-        returnBanknotes.put(nominal, amount / nominal);
-        amount = amount % nominal;
-      }
-      if (amount <= 0) {
-        break;
+    for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
+      int nominal = cell.getKey().getNominal();
+      if (nominal <= requestedAmount) {
+        int banknotesCount = cell.getValue().getBanknotesCount(amount, nominal);
+        if (banknotesCount > 0) {
+          amount = amount % nominal;
+          givenBanknotes.put(nominal, banknotesCount);
+          if (amount == 0) {
+            break;
+          }
+        }
       }
     }
-
-    return returnBanknotes;
-  }
-  
-  private List<Integer> getNominals() {
-    List<Integer>  nominals = new ArrayList<>();
-    for (Cell cell : cells) {
-      nominals.add(cell.getNominal());
-    }
-    return nominals;
+    return givenBanknotes;
   }
 
-  private Integer getMinimalNominal() {
-    List<Integer> nominals = getNominals();
-    return Collections.min(nominals);
+  private int getMinimalNominal() {
+    return cells.lastKey().getNominal();
+  }
+
+  public void loadAtm() {
+    cells = new TreeMap<>(Banknote.nominalComparator);
+    fillCell(Banknote.HUNDRED, 2500);
+    fillCell(Banknote.TWOHUNDRED, 2500);
+    fillCell(Banknote.FIVEHUNDRED, 2500);
+    fillCell(Banknote.THOUSAND, 2500);
+    fillCell(Banknote.TWOTHOUSAND, 2500);
+    fillCell(Banknote.FIVETHOUSAND, 2500);
+  }
+
+  private void fillCell(Banknote banknote, int size) {
+    cells.put(banknote, new Cell(size));
   }
 
   public int getCurrentStatement() {
     int statement = 0;
-    for (Cell cell : cells) {
-      statement += cell.getNominal() * cell.getSize();
+    for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
+      statement += cell.getValue().getStatement(cell.getKey().getNominal());
     }
 
     return statement;
   }
-
-  public void loadCells(int[] nominals, int banknoteCount) {
-    cells = new ArrayList<>();
-    for (int i = 0; i < nominals.length; i++) {
-      var cell = new Cell();
-      cell.setNominal(nominals[i]);
-      cell.setSize(banknoteCount);
-      cells.add(cell);
-    }
-  }
-
 }
