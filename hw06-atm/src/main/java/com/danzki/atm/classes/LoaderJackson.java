@@ -1,5 +1,6 @@
-package com.danzki.atm;
+package com.danzki.atm.classes;
 
+import com.danzki.atm.Cellable;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,7 @@ public class LoaderJackson {
         this.path = path;
     }
 
-    public static List<Cell> loadCells() {
+    public List<Cell> loadCells() {
         var dir = new File(path);
         List<Cell> cells = new ArrayList<>();
         var mapper = new ObjectMapper();

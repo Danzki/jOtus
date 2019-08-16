@@ -1,4 +1,4 @@
-package com.danzki.atm;
+package com.danzki.atm.classes;
 
 import java.util.Comparator;
 

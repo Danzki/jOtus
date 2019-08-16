@@ -1,31 +1,31 @@
-package com.danzki.atm;
+package com.danzki.atm.classes;
 
 
+import com.danzki.atm.Atmable;
+import com.danzki.atm.Cellable;
 import com.danzki.atm.exceptions.IncorrectAmount;
+import com.danzki.atm.exceptions.NotEnoughCash;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Atm {
-  private TreeMap<Banknote, Cell> cells;
+public class Atm implements Atmable {
+  private TreeMap<Banknote, Cellable> cells;
 
-  public TreeMap<Banknote, Cell> getCells() {
-    return cells;
-  }
-
-//  @SneakyThrows
-  public Map<Integer, Integer> giveCash(int requestedAmount) throws IncorrectAmount {
+  @Override
+  public Map<Integer, Integer> giveCash(int requestedAmount) throws IncorrectAmount, NotEnoughCash {
     var givenBanknotes = new HashMap<Integer, Integer>();
     int amount = requestedAmount;
     int minimalNominal = getMinimalNominal();
     if (amount > getCurrentStatement()) {
-      throw new IncorrectAmount("Amount cannot be issue");
+      throw new NotEnoughCash("Amount cannot be issue");
     }
     if (amount % minimalNominal != 0) {
       throw new IncorrectAmount("Amount should be multiple of " + minimalNominal);
     }
-    for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
+    for (Map.Entry<Banknote, Cellable> cell : cells.entrySet()) {
       int nominal = cell.getKey().getNominal();
       if (nominal <= amount) {
         var command = new GiveCommand(cell.getValue(), amount, nominal);
@@ -46,6 +46,7 @@ public class Atm {
 
   public void loadAtm() {
     cells = new TreeMap<>(Banknote.nominalComparator);
+
     fillCell(Banknote.HUNDRED, 10);
     fillCell(Banknote.TWOHUNDRED, 10);
     fillCell(Banknote.FIVEHUNDRED, 10);
@@ -55,12 +56,13 @@ public class Atm {
   }
 
   private void fillCell(Banknote banknote, int size) {
-    cells.put(banknote, new Cell(size));
+    cells.put(banknote, new Cell(banknote.getNominal(), size));
   }
 
+  @Override
   public int getCurrentStatement() {
     int statement = 0;
-    for (Map.Entry<Banknote, Cell> cell : cells.entrySet()) {
+    for (Map.Entry<Banknote, Cellable> cell : cells.entrySet()) {
       var command = new StatementCommand(cell.getValue(), cell.getKey().getNominal());
       statement += command.execute();
     }

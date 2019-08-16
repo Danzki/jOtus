@@ -1,6 +1,8 @@
 package com.danzki.atm;
 
+import com.danzki.atm.classes.Atm;
 import com.danzki.atm.exceptions.IncorrectAmount;
+import com.danzki.atm.exceptions.NotEnoughCash;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.io.InputStreamReader;
 import java.util.Map;
 
 public class AtmApplication {
-  public static void main(String[] args) throws IOException, IncorrectAmount {
+  public static void main(String[] args) throws IOException, IncorrectAmount, NotEnoughCash {
     var atm = new Atm();
     atm.loadAtm();
 
