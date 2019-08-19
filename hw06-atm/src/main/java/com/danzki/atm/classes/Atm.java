@@ -3,11 +3,11 @@ package com.danzki.atm.classes;
 
 import com.danzki.atm.Atmable;
 import com.danzki.atm.Cellable;
+import com.danzki.atm.exceptions.AtmException;
 import com.danzki.atm.exceptions.IncorrectAmount;
 import com.danzki.atm.exceptions.NotEnoughCash;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -15,15 +15,15 @@ public class Atm implements Atmable {
   private TreeMap<Banknote, Cellable> cells;
 
   @Override
-  public Map<Integer, Integer> giveCash(int requestedAmount) throws IncorrectAmount, NotEnoughCash {
+  public Map<Integer, Integer> giveCash(int requestedAmount) throws AtmException {
     var givenBanknotes = new HashMap<Integer, Integer>();
     int amount = requestedAmount;
     int minimalNominal = getMinimalNominal();
     if (amount > getCurrentStatement()) {
-      throw new NotEnoughCash("Amount cannot be issue");
+      throw new AtmException(new NotEnoughCash("Amount cannot be issue"));
     }
     if (amount % minimalNominal != 0) {
-      throw new IncorrectAmount("Amount should be multiple of " + minimalNominal);
+      throw new AtmException(new IncorrectAmount("Amount should be multiple of " + minimalNominal));
     }
     for (Map.Entry<Banknote, Cellable> cell : cells.entrySet()) {
       int nominal = cell.getKey().getNominal();

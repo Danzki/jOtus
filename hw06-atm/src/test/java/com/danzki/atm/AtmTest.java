@@ -3,8 +3,7 @@ package com.danzki.atm;
 import com.danzki.atm.classes.Atm;
 import com.danzki.atm.classes.Banknote;
 import com.danzki.atm.classes.Cell;
-import com.danzki.atm.exceptions.IncorrectAmount;
-import com.danzki.atm.exceptions.NotEnoughCash;
+import com.danzki.atm.exceptions.AtmException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -47,10 +46,8 @@ public class AtmTest {
     try {
       Map<Integer, Integer> cash = atm.giveCash(1000);
       assertEquals((int) getValueFromMap(cash, 1000), 1);
-    } catch (IncorrectAmount incorrectAmount) {
-      incorrectAmount.printStackTrace();
-    } catch (NotEnoughCash notEnoughCash) {
-      notEnoughCash.printStackTrace();
+    } catch (AtmException e) {
+      e.printStackTrace();
     }
   }
 
@@ -90,13 +87,13 @@ public class AtmTest {
   @Test
   @DisplayName("Give cash thrown Not enough cash.")
   void giveCashNotEnoughTest() {
-    assertThrows(NotEnoughCash.class, () -> atm.giveCash(100000));
+    assertThrows(AtmException.class, () -> atm.giveCash(100000));
   }
 
   @Test
   @DisplayName("Give cash thrown IncorrectAmount")
   void giveCashIncorrectAmountTest() {
-    assertThrows(IncorrectAmount.class, () -> atm.giveCash(566));
+    assertThrows(AtmException.class, () -> atm.giveCash(566));
   }
 
   @AfterAll
