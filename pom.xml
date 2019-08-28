@@ -25,11 +25,14 @@
     <module>hw02-containers</module>
     <module>hw03-testing</module>
     <module>hw04-bytecode</module>
+    <module>hw05-gc</module>
+    <module>HW06-atm</module>
+    <module>hw07-depart</module>
   </modules>
 
   <properties>
 
-  <!--region General-->
+    <!--region General-->
     <exec.mainClass>com.danzki.hw04.aop.runner</exec.mainClass>
     <jar.name>${project.name}-${revision}</jar.name>
     <revision>2019-06-SNAPSHOT</revision>
@@ -78,8 +81,8 @@
     <exec.executable>java</exec.executable>
     <jar.name>${project.name}-${revision}</jar.name>
     <lombok-maven-plugin.version>1.18.6.0</lombok-maven-plugin.version>
+    <jackson.version>2.9.9.3</jackson.version>
     <!--endregion-->
-
   </properties>
 
   <dependencyManagement>
@@ -118,6 +121,11 @@
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>${commons-io.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
       </dependency>
       <!--endregion-->
 
@@ -213,6 +221,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
+    </dependency>
+    <!--endregion-->
+
+    <!--regin Libs-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
     </dependency>
     <!--endregion-->
 
