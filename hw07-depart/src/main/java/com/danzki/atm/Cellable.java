@@ -5,4 +5,5 @@ public interface Cellable {
   boolean giveBanknotes(int requestedCount);
   int getBanknotesCount(int requestedAmount, int nominal);
   void loadCell();
+  Integer acceptService(CellService service);
 }

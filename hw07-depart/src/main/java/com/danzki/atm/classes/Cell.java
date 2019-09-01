@@ -1,5 +1,6 @@
 package com.danzki.atm.classes;
 
+import com.danzki.atm.CellService;
 import com.danzki.atm.Cellable;
 
 public class Cell implements Cellable {
@@ -52,6 +53,11 @@ public class Cell implements Cellable {
     }
     size -= requestedCount;
     return true;
+  }
+
+  @Override
+  public Integer acceptService(CellService service) {
+    return service.getStatement(this);
   }
 
 }

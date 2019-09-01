@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Atm implements Atmable {
+  @Getter
   private TreeMap<Banknote, Cellable> cells;
   @Getter
   @Setter
