@@ -21,7 +21,7 @@ public class ObjectCreator implements ObjectCreatorMBean {
           arr.remove(arr.size() - 1);
         }
       }
-//      Thread.sleep(1000);
+      Thread.sleep(10);
     }
   }
 
