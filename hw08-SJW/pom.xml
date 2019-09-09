@@ -11,11 +11,29 @@
 
   <artifactId>hw08-SJW</artifactId>
 
+  <properties>
+    <javax.json.version>1.1.4</javax.json.version>
+  </properties>
+
+
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
     </dependency>
+
+    <!--region JSON-P-->
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>${javax.json.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.json</artifactId>
+      <version>${javax.json.version}</version>
+    </dependency>
+    <!--endregion-->
   </dependencies>
 
 

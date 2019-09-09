@@ -1,15 +1,13 @@
 package com.danzki.jsonwriter.classes;
 
 import com.danzki.jsonwriter.TrackService;
-import com.danzki.jsonwriter.types.TrackedArray;
-import com.danzki.jsonwriter.types.TrackedObject;
-import com.danzki.jsonwriter.types.TrackedPrimitive;
-import com.danzki.jsonwriter.types.TrackedString;
+import com.danzki.jsonwriter.types.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 public class ObjectTracker {
+
 
   public void trackMethod(Field mainField, Object object, TrackService service) {
     if (object.getClass().isArray()) {
@@ -19,10 +17,6 @@ public class ObjectTracker {
     }
 
     Field[] fields = object.getClass().getDeclaredFields();
-    if (fields.length > 0) {
-      service.stepIn();
-      service.openObject();
-    }
     for (Field field : fields) {
       field.setAccessible(true);
       if (Modifier.isStatic(field.getModifiers())) {
@@ -33,16 +27,17 @@ public class ObjectTracker {
         new TrackedPrimitive(field, object).accept(service);
       } else if (field.getType().isAssignableFrom(String.class)) {
         new TrackedString(field, object).accept(service);
+      } else if (field.getType().isAssignableFrom(Boolean.class)) {
+        new TrackedBoolean(field, object).accept(service);
       } else if (field.getType().isArray()) {
         new TrackedArray(field, object).accept(service);
-//      } else if (field.getType().is) {
-
+      } else if (field == null) {
+        new TrackedNull(field, object).accept(service);
       } else {
         trackMethod(field, object, service);
       }
     }
-    service.stepOut();
-    if (fields.length > 0)
-      service.closeObject();
+
+//    System.out.println(service.getResult());
   }
 }
