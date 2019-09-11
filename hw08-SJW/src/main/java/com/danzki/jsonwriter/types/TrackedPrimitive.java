@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 public class TrackedPrimitive implements TrackedField {
   @Getter
   private Field field;
+
   @Getter
   private Object object;
 
