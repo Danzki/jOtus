@@ -2,16 +2,16 @@ package com.danzki.jsonwriter.classes;
 
 import com.danzki.jsonwriter.TrackService;
 import com.danzki.jsonwriter.types.*;
-import lombok.Getter;
-import lombok.SneakyThrows;
 
-import javax.json.*;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JsonService implements TrackService {
-  @Getter
   private JsonObject jsonObject;
 
   private List<JsonObjectBuilder> jsonBuilders;
@@ -27,8 +27,7 @@ public class JsonService implements TrackService {
     var jsonArrayBuilder = Json.createArrayBuilder();
     for (int i = 0; i < length; i++) {
       Object value = Array.get(arrayObj, i);
-      jsonArrayBuilder.add(Json.createObjectBuilder()
-          .add(trackedArray.getField().getName() + i, String.valueOf(value)));
+      jsonArrayBuilder.add(String.valueOf(value));
     }
 
     var jsonBuilder = Json.createObjectBuilder()
@@ -37,8 +36,7 @@ public class JsonService implements TrackService {
   }
 
   @Override
-  @SneakyThrows
-  public void visit(TrackedPrimitive trackedPrimitive) {
+  public void visit(TrackedPrimitive trackedPrimitive) throws IllegalAccessException {
     String name = trackedPrimitive.getField().getType().getName();
     var jsonBuilder = Json.createObjectBuilder();
     if (name.equals("int") ||
@@ -51,8 +49,10 @@ public class JsonService implements TrackService {
                   .getName(),
               trackedPrimitive
                   .getField()
-                  .getInt(trackedPrimitive.getObject()));
-    } else if (name.equals("boolean")) {
+                  .getInt(trackedPrimitive.getObject())
+      );
+    } else if (name.equals("boolean") ||
+        name.equals("java.lang.Boolean")) {
       jsonBuilder.add(trackedPrimitive
               .getField()
               .getName(),
@@ -61,11 +61,6 @@ public class JsonService implements TrackService {
                   .getBoolean(trackedPrimitive.getObject()) ? JsonValue.TRUE : JsonValue.FALSE);
     }
     jsonBuilders.add(jsonBuilder);
-  }
-
-  @Override
-  public void visit(TrackedObject trackedObject) {
-
   }
 
   @Override
@@ -80,15 +75,12 @@ public class JsonService implements TrackService {
   }
 
   @Override
-  @SneakyThrows
-  public void visit(TrackedBoolean trackedBoolean) {
+  public void visit(TrackedBoolean trackedBoolean) throws IllegalAccessException {
     var jsonBuilder = Json.createObjectBuilder()
         .add(trackedBoolean
             .getField()
             .getName(),
-            trackedBoolean
-                .getField()
-                .getBoolean(trackedBoolean.getObject()) ? "true" : "false");
+            (Boolean) trackedBoolean.getObject() ? JsonValue.TRUE : JsonValue.FALSE);
     jsonBuilders.add(jsonBuilder);
   }
 
@@ -113,5 +105,7 @@ public class JsonService implements TrackService {
     return jsonObject;
   }
 
-
+  public JsonObject getJsonObject() {
+    return this.jsonObject;
+  }
 }

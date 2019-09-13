@@ -6,10 +6,9 @@ import javax.json.JsonObject;
 
 public interface TrackService {
   void visit(TrackedArray field);
-  void visit(TrackedPrimitive field);
-  void visit(TrackedObject field);
+  void visit(TrackedPrimitive field) throws IllegalAccessException;
   void visit(TrackedString field);
-  void visit(TrackedBoolean field);
+  void visit(TrackedBoolean field) throws IllegalAccessException;
   void visit(TrackedNull field);
 
   JsonObject jsonBuild();

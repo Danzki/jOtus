@@ -34,6 +34,13 @@
       <version>${javax.json.version}</version>
     </dependency>
     <!--endregion-->
+
+    <!--region GSON, Jackson etc-->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+    <!--endregion-->
   </dependencies>
 
 

@@ -2,21 +2,29 @@ package com.danzki.jsonwriter.types;
 
 import com.danzki.jsonwriter.TrackService;
 import com.danzki.jsonwriter.TrackedField;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 import java.lang.reflect.Field;
 
-@AllArgsConstructor
 public class TrackedArray implements TrackedField {
-  @Getter
   private Field field;
 
-  @Getter
   private Object object;
+
+  public TrackedArray(Field field, Object object) {
+    this.field = field;
+    this.object = object;
+  }
 
   @Override
   public void accept(TrackService trackService) {
     trackService.visit(this);
+  }
+
+  public Field getField() {
+    return this.field;
+  }
+
+  public Object getObject() {
+    return this.object;
   }
 }

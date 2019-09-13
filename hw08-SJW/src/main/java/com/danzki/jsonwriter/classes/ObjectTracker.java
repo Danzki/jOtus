@@ -2,18 +2,25 @@ package com.danzki.jsonwriter.classes;
 
 import com.danzki.jsonwriter.TrackService;
 import com.danzki.jsonwriter.types.*;
-import lombok.SneakyThrows;
 
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonWriter;
+import javax.json.JsonWriterFactory;
+import javax.json.stream.JsonGenerator;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ObjectTracker {
 
-  @SneakyThrows
-  public JsonObject trackMethod(Field mainfield, Object object, TrackService service) {
+  public JsonObject trackMethod(Field mainfield, Object object, TrackService service) throws IllegalAccessException {
     Field[] fields = object.getClass().getDeclaredFields();
     for (Field field : fields) {
       field.setAccessible(true);
@@ -41,4 +48,37 @@ public class ObjectTracker {
 
     return service.jsonBuild();
   }
+
+  public void writeToFile(JsonObject json, String fileName) throws IOException {
+    FileWriter fWriter = new FileWriter("./out/" + fileName + ".json");
+    Map<String, Boolean> config = buildConfig(JsonGenerator.PRETTY_PRINTING);
+    JsonWriterFactory writerFactory = Json.createWriterFactory(config);
+    try (JsonWriter jsonWriter = writerFactory.createWriter(fWriter)) {
+      jsonWriter.writeObject(json);
+      System.out.println("File " + fileName + ".json is created");
+    }
+  }
+
+  public String getJsonString(JsonObject json) {
+    StringWriter jsonString = new StringWriter();
+    Map<String, Boolean> config = buildConfig(JsonGenerator.PRETTY_PRINTING);
+    JsonWriterFactory writerFactory = Json.createWriterFactory(config);
+    try (JsonWriter jsonWriter = writerFactory.createWriter(jsonString)) {
+      jsonWriter.writeObject(json);
+    }
+    return jsonString.toString();
+  }
+
+  private Map<String, Boolean> buildConfig(String... options) {
+    Map<String, Boolean> config = new HashMap<String, Boolean>();
+
+    if (options != null) {
+      for (String option : options) {
+        config.put(option, true);
+      }
+    }
+    return config;
+  }
+
+
 }
