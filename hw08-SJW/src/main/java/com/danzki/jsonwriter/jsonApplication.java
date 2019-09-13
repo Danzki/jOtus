@@ -1,7 +1,6 @@
 package com.danzki.jsonwriter;
 
-import com.danzki.jsonwriter.classes.JsonService;
-import com.danzki.jsonwriter.classes.ObjectTracker;
+import com.danzki.jsonwriter.classes.SimpleJsonWriter;
 import com.danzki.jsonwriter.examples.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,9 +13,8 @@ import java.util.List;
 public class jsonApplication {
   public static void main(String[] args) throws IllegalAccessException, IOException {
     var emp1 = createEmployee();
-    var objectTracker = new ObjectTracker();
-    var jsonCreated = objectTracker.trackMethod(null, emp1, new JsonService());
-    objectTracker.writeToFile(jsonCreated, emp1.getClass().getSimpleName());
+    var sJson = new SimpleJsonWriter().toJson(emp1);
+    SimpleJsonWriter.writeToFile(sJson, emp1.getClass().getSimpleName());
     Gson gson = gsonWriter(emp1, emp1.getClass().getSimpleName());
   }
 

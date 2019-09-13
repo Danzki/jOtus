@@ -2,6 +2,7 @@ package com.danzki.jsonwriter;
 
 import com.danzki.jsonwriter.classes.JsonService;
 import com.danzki.jsonwriter.classes.ObjectTracker;
+import com.danzki.jsonwriter.classes.SimpleJsonWriter;
 import com.danzki.jsonwriter.examples.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.json.JsonObject;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class jsonApplicationTest {
   JsonObject jsonCreated;
 
   @BeforeEach
-  public void initiate() throws IOException, IllegalAccessException {
+  public void initiate() {
     testEmployee = Employee
         .builder()
         .isWork(true)
@@ -52,5 +52,12 @@ public class jsonApplicationTest {
     gson.toJson(testEmployee, actualWriter);
 
     assertEquals(expected.replaceAll("\\s+", ""), actualWriter.toString().replaceAll("\\s+", ""));
+  }
+
+  @DisplayName("Deserialization of SimpleJsonWriter returned JSON to Object")
+  @Test
+  public void getObjectFromSimpleJson() throws IllegalAccessException {
+    var testJson = new SimpleJsonWriter().toJson(testEmployee);
+    Employee gson = new Gson().fromJson(testJson.toString(), Employee.class);
   }
 }
