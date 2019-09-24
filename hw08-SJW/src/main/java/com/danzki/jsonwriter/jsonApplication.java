@@ -12,13 +12,15 @@ import java.util.List;
 
 public class jsonApplication {
   public static void main(String[] args) throws IllegalAccessException, IOException {
-    var emp1 = createEmployee();
-    var sJson = new SimpleJsonWriter().toJson(emp1);
-    SimpleJsonWriter.writeToFile(sJson, emp1.getClass().getSimpleName());
-    Gson gson = gsonWriter(emp1, emp1.getClass().getSimpleName());
+    var obj = createEmployee(); //List.of(1, 2 ,3);
+    var sJson = new SimpleJsonWriter();
+    var gson = new Gson();
+
+    System.out.println("SJW: " + sJson.toJson(obj));
+    System.out.println("GSON: " + gson.toJson(obj));
   }
 
-  private static Gson gsonWriter(Employee emp1, String fileName) {
+  private static Gson gsonWriter(Object emp1, String fileName) {
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.serializeNulls();
     Gson gson = gsonBuilder.setPrettyPrinting().create();

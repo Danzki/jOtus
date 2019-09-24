@@ -3,9 +3,6 @@ package com.danzki.jsonwriter.classes;
 import com.danzki.jsonwriter.SimpleJson;
 
 import javax.json.*;
-import javax.json.stream.JsonGenerator;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -13,6 +10,7 @@ import java.util.*;
 
 public class SimpleJsonWriter implements SimpleJson {
   private JsonObject jsonObject;
+  private JsonArray jsonArray;
 
   private List<JsonObjectBuilder> jsonBuilders;
 
@@ -21,12 +19,74 @@ public class SimpleJsonWriter implements SimpleJson {
   }
 
   @Override
-  public JsonObject toJson(Object object) throws IllegalAccessException {
-    jsonObject = navigateObject(object);
-    return jsonObject;
+  public String toJson(String string) {
+    if (isNull(string)) {
+      return JsonValue.NULL.toString();
+    }
+    return Json.createValue(string).toString();
+  }
+
+  @Override
+  public String toJson(boolean bool) {
+    return bool ? JsonValue.TRUE.toString() : JsonValue.FALSE.toString();
+  }
+
+  @Override
+  public String toJson(int number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(long number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(double number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(float number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(short number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(byte number) {
+    return Json.createValue(number).toString();
+  }
+
+  @Override
+  public String toJson(char c) {
+    return Json.createValue(Character.toString(c)).toString();
+  }
+
+  private boolean isNull(Object object) {
+    return object == null ? true : false;
+  }
+
+  @Override
+  public String toJson(Object object) throws IllegalAccessException {
+    if (object.getClass().isArray()) {
+      jsonArray = navigateArray(object);
+      return jsonArray.toString();
+    } else if (object instanceof Collection) {
+      jsonArray = navigateArray(((Collection) object).toArray());
+      return jsonArray.toString();
+    } else {
+      jsonObject = navigateObject(object);
+      return jsonObject.toString();
+    }
   }
 
   private JsonObject navigateObject(Object object) throws IllegalAccessException {
+
+
     Field[] fields = object.getClass().getDeclaredFields();
     for (Field field : fields) {
       field.setAccessible(true);
@@ -36,20 +96,25 @@ public class SimpleJsonWriter implements SimpleJson {
 
       Object fieldObject = field.get(object);
       if (fieldObject == null) {
-        visitNull(field);
+        continue;
       } else if (field.getType().isPrimitive() || field.getType().isAssignableFrom(Boolean.class)) {
         visitPrimitive(field, fieldObject);
       } else if (field.getType().isAssignableFrom(String.class)) {
         visitString(field, fieldObject);
       } else if (field.getType().isAssignableFrom(List.class)) {
-        visitArray(field, ((Collection) fieldObject).toArray());
+        visitFieldArray(field.getName(), ((Collection) fieldObject).toArray());
       } else if (field.getType().isArray()) {
-        visitArray(field, fieldObject);
+        visitFieldArray(field.getName(), fieldObject);
       } else {
         navigateObject(fieldObject);
       }
     }
     return jsonBuild();
+  }
+
+  private JsonArray navigateArray(Object object) {
+    JsonArrayBuilder jsonArrayBuilder = getJsonArrayBuilder(object);
+    return jsonArrayBuilder.build();
   }
 
   public JsonObject jsonBuild() {
@@ -62,13 +127,7 @@ public class SimpleJsonWriter implements SimpleJson {
     return jsonObject;
   }
 
-  private void visitNull(Field fieldVisited) {
-    var jsonBuilder = Json.createObjectBuilder()
-        .add(fieldVisited.getName(), JsonValue.NULL);
-    jsonBuilders.add(jsonBuilder);
-  }
-
-  private void visitPrimitive(Field fieldVisited, Object objectVisited) throws IllegalAccessException {
+  private void visitPrimitive(Field fieldVisited, Object objectVisited) {
     String name = fieldVisited.getType().getName();
     var jsonBuilder = Json.createObjectBuilder();
     if (name.equals("int") ||
@@ -92,35 +151,31 @@ public class SimpleJsonWriter implements SimpleJson {
     jsonBuilders.add(jsonBuilder);
   }
 
-  private void visitBoolean(Field fieldVisited, Object objectVisited) {
-    var jsonBuilder = Json.createObjectBuilder()
-        .add(fieldVisited.getName(),
-            (Boolean) objectVisited ? JsonValue.TRUE : JsonValue.FALSE);
-    jsonBuilders.add(jsonBuilder);
+  private void visitFieldArray(String name, Object objectVisited) {
+    JsonArrayBuilder jsonArrayBuilder = getJsonArrayBuilder(objectVisited);
+
+    if (name != null) {
+      var jsonBuilder = Json.createObjectBuilder()
+          .add(name, jsonArrayBuilder);
+      jsonBuilders.add(jsonBuilder);
+    }
   }
 
-  private void visitArray(Field fieldVisited, Object objectVisited) {
+  private JsonArrayBuilder getJsonArrayBuilder(Object objectVisited) {
     Object arrayObj = objectVisited;
     int length = Array.getLength(arrayObj);
     var jsonArrayBuilder = Json.createArrayBuilder();
     for (int i = 0; i < length; i++) {
       Object value = Array.get(arrayObj, i);
-      jsonArrayBuilder.add(String.valueOf(value));
+      if (value instanceof String) {
+        jsonArrayBuilder.add(String.valueOf(value));
+      } else if (value instanceof Integer) {
+        jsonArrayBuilder.add((Integer) value);
+      } else if (value instanceof Boolean) {
+        jsonArrayBuilder.add((Boolean) value);
+      }
     }
-
-    var jsonBuilder = Json.createObjectBuilder()
-        .add(fieldVisited.getName(), jsonArrayBuilder);
-    jsonBuilders.add(jsonBuilder);
-  }
-
-  public static void writeToFile(JsonObject json, String fileName) throws IOException {
-    FileWriter fWriter = new FileWriter("./out/" + fileName + ".json");
-    Map<String, Boolean> config = buildConfig(JsonGenerator.PRETTY_PRINTING);
-    JsonWriterFactory writerFactory = Json.createWriterFactory(config);
-    try (JsonWriter jsonWriter = writerFactory.createWriter(fWriter)) {
-      jsonWriter.writeObject(json);
-      System.out.println("File " + fileName + ".json is created");
-    }
+    return jsonArrayBuilder;
   }
 
   private static Map<String, Boolean> buildConfig(String... options) {
