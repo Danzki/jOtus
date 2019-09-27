@@ -21,6 +21,15 @@ public class DBServiceUsers implements DBServiceUser {
   public Optional<User> getUser(long id) {
     try(SessionManager sessionManager = userDao.getSessionManger()) {
       sessionManager.open();
+      try {
+        Optional<User> user = userDao.findById(id);
+        logger.info("Row: {}", user.orElse(null));
+        return user;
+      } catch(Exception e) {
+        logger.error(e.getMessage(), e);
+        sessionManager.rollback();
+        throw new DBServiceException(e);
+      }
 
     }
   }
@@ -29,10 +38,16 @@ public class DBServiceUsers implements DBServiceUser {
   public long saveUser(User user) {
     try(SessionManager sessionManager = userDao.getSessionManger()) {
       sessionManager.open();
+      try {
       long id = userDao.saveUser(user);
       sessionManager.commit();
-      logger.info("created " + : {}", id);
+      logger.info("created " + ": {}", id);
       return id;
+      } catch (Exception e) {
+        logger.error(e.getMessage(), e);
+        sessionManager.rollback();
+        throw new DBServiceException(e);
+      }
     }
   }
 }
