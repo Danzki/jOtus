@@ -28,6 +28,7 @@
     <module>hw05-gc</module>
     <module>HW06-atm</module>
     <module>hw07-depart</module>
+    <module>hw08-SJW</module>
   </modules>
 
   <properties>
@@ -57,6 +58,7 @@
     <jcip-annotations.version>1.0</jcip-annotations.version>
     <spotbugs.version>4.0.0-beta3</spotbugs.version>
     <lombok.version>1.18.8</lombok.version>
+    <lang3.version>3.0</lang3.version>
     <!--endregion-->
 
     <!--region testing - JUnit, AssertJ, Mockito, Hacrest -->
@@ -159,6 +161,11 @@
         <artifactId>error_prone_annotations</artifactId>
         <version>${error_prone_annotations.version}</version>
         <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${lang3.version}</version>
       </dependency>
       <!--endregion-->
 
