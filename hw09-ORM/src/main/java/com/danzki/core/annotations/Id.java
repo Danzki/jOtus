@@ -1,4 +1,4 @@
-package com.danzki.api.model;
+package com.danzki.core.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
