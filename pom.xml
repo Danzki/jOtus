@@ -29,6 +29,7 @@
     <module>HW06-atm</module>
     <module>hw07-depart</module>
     <module>hw08-SJW</module>
+    <module>hw09-ORM</module>
   </modules>
 
   <properties>
@@ -59,6 +60,8 @@
     <spotbugs.version>4.0.0-beta3</spotbugs.version>
     <lombok.version>1.18.8</lombok.version>
     <lang3.version>3.0</lang3.version>
+    <h2database.version>1.4.197</h2database.version>
+    <logback-classic.version>1.2.3</logback-classic.version>
     <!--endregion-->
 
     <!--region testing - JUnit, AssertJ, Mockito, Hacrest -->
