@@ -1,14 +1,16 @@
 package com.danzki.jdbc.sessionmanager;
 
-import com.danzki.api.sessionmanager.DBSession;
+import com.danzki.core.sessionmanager.DatabaseSession;
 
 import java.sql.Connection;
 
-public class DBSessionJdbc implements DBSession {
+public class DatabaseSessionJdbc implements DatabaseSession {
   private final Connection connection;
-  DBSessionJdbc(Connection connection) {
+
+  DatabaseSessionJdbc(Connection connection) {
     this.connection = connection;
   }
+
   public Connection getConnection() {
     return connection;
   }
