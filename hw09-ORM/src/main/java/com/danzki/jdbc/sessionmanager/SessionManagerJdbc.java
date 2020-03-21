@@ -1,18 +1,19 @@
 package com.danzki.jdbc.sessionmanager;
 
-import com.danzki.core.sessionmanager.SessionManager;
-import com.danzki.core.sessionmanager.SessionManagerException;
+import com.danzki.api.sessionmanager.DBSession;
+import com.danzki.api.sessionmanager.SessionManager;
+import com.danzki.api.sessionmanager.SessionManagerException;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 
 public class SessionManagerJdbc implements SessionManager {
-
   private static final int TIMEOUT_IN_SECONDS = 5;
   private final DataSource dataSource;
+  private DBSessionJdbc databaseSession;
   private Connection connection;
-  private DatabaseSessionJdbc databaseSession;
 
   public SessionManagerJdbc(DataSource dataSource) {
     if (dataSource == null) {
@@ -22,47 +23,58 @@ public class SessionManagerJdbc implements SessionManager {
   }
 
   @Override
-  public void beginSession() {
+  public void open() {
     try {
       connection = dataSource.getConnection();
-      databaseSession = new DatabaseSessionJdbc(connection);
+      databaseSession = new DBSessionJdbc(connection);
     } catch (SQLException e) {
       throw new SessionManagerException(e);
     }
   }
 
   @Override
-  public void commitSession() {
-    checkConnection();
-    try {
-      connection.commit();
-    } catch (SQLException e) {
-      throw new SessionManagerException(e);
-    }
-  }
-
-  @Override
-  public void rollbackSession() {
-    checkConnection();
-    try {
-      connection.rollback();
-    } catch (SQLException e) {
-      throw new SessionManagerException(e);
-    }
-  }
-
-  @Override
-  public void close() {
+  public void close() throws SessionManagerException {
     checkConnection();
     try {
       connection.close();
     } catch (SQLException e) {
-      throw new SessionManagerException(e);
+      e.printStackTrace();
+    }
+
+  }
+
+  @Override
+  public void rollback() {
+    checkConnection();
+    try {
+      connection.rollback();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void rollback(Savepoint savepoint) {
+    checkConnection();
+    try {
+      connection.rollback(savepoint);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  @Override
+  public void commit() {
+    checkConnection();
+    try {
+      connection.commit();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
   @Override
-  public DatabaseSessionJdbc getCurrentSession() {
+  public DBSession getCurrentSession() {
     checkConnection();
     return databaseSession;
   }

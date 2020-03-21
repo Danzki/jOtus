@@ -5,12 +5,9 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.logging.Logger;
 
-/**
- * @author sergey
- * created on 03.02.19.
- */
 public class DataSourceH2 implements DataSource {
   private static final String URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
 
@@ -22,43 +19,42 @@ public class DataSourceH2 implements DataSource {
   }
 
   @Override
-  public Connection getConnection(String username, String password) {
+  public Connection getConnection(String username, String password) throws SQLException {
     return null;
   }
 
   @Override
-  public PrintWriter getLogWriter() {
+  public PrintWriter getLogWriter() throws SQLException {
     return null;
   }
 
   @Override
-  public void setLogWriter(PrintWriter out) {
-    throw new UnsupportedOperationException();
+  public void setLogWriter(PrintWriter out) throws SQLException {
 
   }
 
   @Override
-  public int getLoginTimeout() {
+  public void setLoginTimeout(int seconds) throws SQLException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public void setLoginTimeout(int seconds) {
+  public int getLoginTimeout() throws SQLException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public Logger getParentLogger() {
+  public Logger getParentLogger() throws SQLFeatureNotSupportedException {
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public <T> T unwrap(Class<T> iface) {
-    throw new UnsupportedOperationException();
+  public <T> T unwrap(Class<T> iface) throws SQLException {
+    return null;
   }
 
   @Override
-  public boolean isWrapperFor(Class<?> iface) {
+  public boolean isWrapperFor(Class<?> iface) throws SQLException {
     throw new UnsupportedOperationException();
   }
 }
