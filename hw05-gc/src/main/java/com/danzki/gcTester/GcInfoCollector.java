@@ -11,6 +11,7 @@ import lombok.Setter;
 public class GcInfoCollector {
   private int count;
   private double time;
+  private double maxPause = 0;
 
   public void setTime(double time) {
     this.time = time;
@@ -20,4 +21,9 @@ public class GcInfoCollector {
     this.count = count;
   }
 
+  public void setMaxPause(double maxPause) {
+    if (this.maxPause < maxPause) {
+      this.maxPause = maxPause;
+    }
+  }
 }
