@@ -37,12 +37,12 @@
     <!--region General-->
     <exec.mainClass>com.danzki.hw04.aop.runner</exec.mainClass>
     <jar.name>${project.name}-${revision}</jar.name>
-    <revision>2019-06-SNAPSHOT</revision>
-    <java.version>12</java.version>
-    <minimal.maven.version>3.5.0</minimal.maven.version>
+    <revision>2019-12-SNAPSHOT</revision>
+    <java.version>13</java.version>
+    <minimal.maven.version>3.6.0</minimal.maven.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <asm.version>7.1</asm.version>
+    <asm.version>3.0</asm.version>
     <!--endregion-->
 
     <!--region BOMs -->
@@ -62,6 +62,8 @@
     <lang3.version>3.0</lang3.version>
     <h2database.version>1.4.197</h2database.version>
     <logback-classic.version>1.2.3</logback-classic.version>
+    <hibernate-core.version>5.4.4.Final</hibernate-core.version>
+    <asm.version>5.0.3</asm.version>
     <!--endregion-->
 
     <!--region testing - JUnit, AssertJ, Mockito, Hacrest -->
@@ -169,6 +171,11 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
         <version>${lang3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>asm.asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>${asm.version}</version>
       </dependency>
       <!--endregion-->
 

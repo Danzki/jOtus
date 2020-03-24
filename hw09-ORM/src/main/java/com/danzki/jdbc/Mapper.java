@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Mapper<T> {
-  private String tableName;
+  private final String tableName;
   private Field primaryKey;
-  private List<Field> fields;
+  private final List<Field> fields;
 
   public Mapper(Class<T> clazz) {
     tableName = clazz.getSimpleName();
@@ -24,20 +24,10 @@ public class Mapper<T> {
   }
 
   public long getPrimaryKeyId(Object object) throws IllegalAccessException {
-    primaryKey.setAccessible(true);
-    return (long) primaryKey.get(object);
-  }
-
-  private void objectParser(Object object) {
-    tableName = object.getClass().getSimpleName();
-    fields = new ArrayList<>();
-    for (Field field : object.getClass().getDeclaredFields()) {
-      if (field.isAnnotationPresent(Id.class)) {
-        primaryKey = field;
-      } else {
-        fields.add(field);
-      }
+    if (primaryKey != null) {
+      primaryKey.setAccessible(true);
     }
+    return (long) primaryKey.get(object);
   }
 
   public String getSelectQuery() {
