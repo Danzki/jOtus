@@ -29,6 +29,14 @@ public class User {
   public User() {
   }
 
+  public void setAddressDataSet(AddressDataSet addressDataSet) {
+    this.addressDataSet = addressDataSet;
+  }
+
+  public void setPhones(List<PhoneDataSet> phones) {
+    this.phones = phones;
+  }
+
   public int getAge() {
     return age;
   }

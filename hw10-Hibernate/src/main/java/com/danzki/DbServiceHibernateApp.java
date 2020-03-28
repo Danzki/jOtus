@@ -49,6 +49,10 @@ public class DbServiceHibernateApp {
         .withUser(user)
         .build()
     );
+
+    user.setAddressDataSet(address);
+    user.setPhones(phones);
+
     logger.info("Step 1. Create new User");
     long id = dbServiceUser.create(user);
     logger.info("Created user: " + user + " with id=" + id);
