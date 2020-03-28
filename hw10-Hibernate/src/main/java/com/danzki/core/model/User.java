@@ -20,13 +20,28 @@ public class User {
   private String name;
   @Column(name = "age")
   private int age;
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
   private AddressDataSet addressDataSet;
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL, CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
   private List<PhoneDataSet> phones = new ArrayList<>();
 
-
   public User() {
+  }
+
+  public AddressDataSet getAddressDataSet() {
+    return addressDataSet;
+  }
+
+  public List<PhoneDataSet> getPhones() {
+    return phones;
+  }
+
+  public void setAddressDataSet(AddressDataSet addressDataSet) {
+    this.addressDataSet = addressDataSet;
+  }
+
+  public void setPhones(List<PhoneDataSet> phones) {
+    this.phones = phones;
   }
 
   public int getAge() {
