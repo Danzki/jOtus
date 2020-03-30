@@ -30,6 +30,8 @@
     <module>hw07-depart</module>
     <module>hw08-SJW</module>
     <module>hw09-ORM</module>
+    <module>hw10-Hibernate</module>
+    <module>hw11-cache</module>
   </modules>
 
   <properties>
