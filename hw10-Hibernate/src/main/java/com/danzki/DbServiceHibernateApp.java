@@ -50,8 +50,8 @@ public class DbServiceHibernateApp {
         .build()
     );
 
-    user.setPhones(phones);
     user.setAddressDataSet(address);
+    user.setPhones(phones);
 
     logger.info("Step 1. Create new User");
     long id = dbServiceUser.create(user);

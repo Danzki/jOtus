@@ -45,7 +45,6 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <asm.version>3.0</asm.version>
     <!--endregion-->
-
     <!--region BOMs -->
     <spring-boot.version>2.1.6.RELEASE</spring-boot.version>
     <!--endregion-->
