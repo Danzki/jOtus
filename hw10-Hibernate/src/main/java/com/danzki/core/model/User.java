@@ -20,15 +20,14 @@ public class User {
   private String name;
   @Column(name = "age")
   private int age;
+
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private AddressDataSet addressDataSet;
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<PhoneDataSet> phones = new ArrayList<>();
 
-
   public User() {
   }
-
   public void setAddressDataSet(AddressDataSet addressDataSet) {
     this.addressDataSet = addressDataSet;
   }
