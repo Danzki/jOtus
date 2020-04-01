@@ -18,6 +18,8 @@ import java.util.Map;
 
 public class Runner {
   public static void main(String... args) throws Exception {
+    GcInfoCollector youngInfo = new GcInfoCollector();
+    GcInfoCollector oldInfo = new GcInfoCollector();
     Map<String, GcInfoCollector> gc = new HashMap<>();
 
     System.out.println("Starting pid: " + ManagementFactory.getRuntimeMXBean().getName());
@@ -25,28 +27,26 @@ public class Runner {
     long beginTime = System.currentTimeMillis();
 
     int size = 5 * 1000 * 1000;
-    int loopCounter = 1000;
+    int loopCounter = 100;
     MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-    ObjectName name = new ObjectName("com.danzki:type=Runner");
+    ObjectName name = new ObjectName("com.danzki:type=runner");
 
     ObjectCreator mbean = new ObjectCreator(loopCounter);
     mbs.registerMBean(mbean, name);
     mbean.setSize(size);
     mbean.run();
 
-    String elapsedTime = "Time: " + (System.currentTimeMillis() - beginTime) / 1000 + " seconds";
+    String elapsedTime = "time:" + (System.currentTimeMillis() - beginTime) / 1000;
     List<String> gcRows = new ArrayList<>();
-    gc.forEach((k, v) -> gcRows.add(k + ": count = " + v.getCount() +
-        ", time = " + v.getTime() / 1000 + " seconds" +
-        ", max pause = " + v.getMaxPause() / 1000 + " seconds"));
+    gc.forEach((k, v) -> gcRows.add(k + ": count = " + v.getCount() + ", time = " + v.getTime() / 1000 + " seconds"));
 
     System.out.println(elapsedTime);
     for (String row : gcRows) {
       System.out.println(row);
     }
 
-    try (PrintStream out = new PrintStream(new FileOutputStream("./out/" + args[0] + "_" + args[1] + ".txt"))) {
-      out.println(args[0] + " info.");
+    try (PrintStream out = new PrintStream(new FileOutputStream("./out/" + args[0] + ".txt"))) {
+      out.println(args[0] + "info.");
       out.println(elapsedTime);
       for (String row : gcRows) {
         out.println(row);
@@ -88,7 +88,6 @@ public class Runner {
   private static void setGcInfo(GcInfoCollector gcInfo, String gcNamePattern, String gcName, long duration) {
     gcInfo.setCount(gcInfo.getCount() + 1);
     gcInfo.setTime(gcInfo.getTime() + duration);
-    gcInfo.setMaxPause(duration);
   }
 
   private static String keyByGenerationName(String name) {

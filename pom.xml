@@ -31,12 +31,13 @@
     <module>hw08-SJW</module>
     <module>hw09-ORM</module>
     <module>hw10-Hibernate</module>
+    <module>hw11-cache</module>
   </modules>
 
   <properties>
 
     <!--region General-->
-    <exec.mainClass>com.danzki.DbServiceHibernateApp</exec.mainClass>
+    <exec.mainClass>com.danzki.hw04.aop.runner</exec.mainClass>
     <jar.name>${project.name}-${revision}</jar.name>
     <revision>2019-12-SNAPSHOT</revision>
     <java.version>13</java.version>
@@ -261,7 +262,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven-compiler-plugin.version}</version>
           <configuration>
-            <release>${java.version}</release>
             <parameters>true</parameters>
             <compilerArgs>
               <arg>--enable-preview</arg>
@@ -280,7 +280,11 @@
               <include>**/*TestCase.java</include>
             </includes>
             <properties>
+              <!--<includeTags>fast</includeTags>-->
               <excludeTags>slow</excludeTags>
+              <!--<configurationParameters>-->
+              <!--junit.jupiter.conditions.deactivate = *-->
+              <!--</configurationParameters>-->
             </properties>
           </configuration>
         </plugin>
@@ -338,7 +342,7 @@
               <configuration>
                 <transformers>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>${exec.mainClass}</mainClass>
+                    <mainClass>com.danzki.hw04-bytecode.runner</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
