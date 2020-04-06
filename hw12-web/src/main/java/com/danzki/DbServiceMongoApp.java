@@ -8,7 +8,8 @@ import com.danzki.core.service.DBServiceUser;
 import com.danzki.core.service.DbServiceUserImpl;
 import com.danzki.mongo.dao.UserDaoMongo;
 import com.danzki.mongo.sessionmanager.SessionManagerMongo;
-import com.danzki.mongo.template.MongoBuilder;
+import com.danzki.mongo.template.MongoGenerator;
+import com.danzki.mongo.template.MongoGeneratorImpl;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,10 +22,10 @@ public class DbServiceMongoApp {
   private static Logger logger = LoggerFactory.getLogger(DbServiceMongoApp.class);
 
   public static void main(String[] args) {
-    MongoBuilder mongoBuilder = new MongoBuilder();
-    SessionManagerMongo sessionManager = new SessionManagerMongo();
+    SessionManagerMongo sessionManager = new SessionManagerMongo("mongodb://localhost", "mongo-db-test");
     UserDao userDao = new UserDaoMongo(sessionManager);
     DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
+    MongoGenerator mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
 
     var user = new User( "UserName", 30, "user1", "11111");
 

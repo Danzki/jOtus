@@ -6,7 +6,8 @@ import com.danzki.core.service.DBServiceUser;
 import com.danzki.core.service.DbServiceUserImpl;
 import com.danzki.mongo.dao.UserDaoMongo;
 import com.danzki.mongo.sessionmanager.SessionManagerMongo;
-import com.danzki.mongo.template.MongoBuilder;
+import com.danzki.mongo.template.MongoGenerator;
+import com.danzki.mongo.template.MongoGeneratorImpl;
 import com.danzki.server.UsersWebServer;
 import com.danzki.server.UsersWebServerSecurity;
 import com.danzki.services.TemplateProcessor;
@@ -33,12 +34,12 @@ public class WebServerApp {
   private static final String TEMPLATES_DIR = "/templates/";
 
   public static void main(String[] args) throws Exception {
-    MongoBuilder mongoBuilder = new MongoBuilder();
-    SessionManagerMongo sessionManager = new SessionManagerMongo();
+    SessionManagerMongo sessionManager = new SessionManagerMongo("mongodb://localhost", "mongo-db-test");
     UserDao userDao = new UserDaoMongo(sessionManager);
     DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
+    MongoGenerator mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
 
-    mongoBuilder.generateUsers(dbServiceUser);
+    mongoGenerator.generateUsers();
 
     Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
     TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);

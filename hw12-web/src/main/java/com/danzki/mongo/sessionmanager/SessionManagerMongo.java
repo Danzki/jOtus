@@ -6,21 +6,34 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 
 public class SessionManagerMongo implements SessionManager {
-  private static final String MONGODB_URL = "mongodb://localhost"; // Работа без DockerToolbox
-  private static final String MONGO_DATABASE_NAME = "mongo-db-test";
 
   private MongoDatabase database;
   private DatabaseSessionMongo databaseSession;
+  private String dbUrl;
+  private String dbName;
+
+  public SessionManagerMongo(String dbUrl, String dbName) {
+    this.dbUrl = dbUrl;
+    this.dbName = dbName;
+  }
 
   public MongoDatabase getDatabase() {
     return database;
   }
 
+  public String getDbUrl() {
+    return dbUrl;
+  }
+
+  public String getDbName() {
+    return dbName;
+  }
+
   @Override
   public void beginSession() {
     try {
-      databaseSession = new DatabaseSessionMongo(MongoClients.create(MONGODB_URL));
-      database = databaseSession.getMongoClient().getDatabase(MONGO_DATABASE_NAME);
+      databaseSession = new DatabaseSessionMongo(MongoClients.create(this.dbUrl));
+      database = databaseSession.getMongoClient().getDatabase(this.dbName);
     } catch (Exception e) {
       throw new SessionManagerException(e);
     }

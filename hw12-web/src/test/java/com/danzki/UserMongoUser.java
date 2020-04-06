@@ -6,9 +6,8 @@ import com.danzki.core.service.DBServiceUser;
 import com.danzki.core.service.DbServiceUserImpl;
 import com.danzki.mongo.dao.UserDaoMongo;
 import com.danzki.mongo.sessionmanager.SessionManagerMongo;
-import com.danzki.mongo.template.MongoBuilder;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoDatabase;
+import com.danzki.mongo.template.MongoGenerator;
+import com.danzki.mongo.template.MongoGeneratorImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,20 +27,17 @@ public class UserMongoUser extends UserHelper {
   private static final String MONGO_DATABASE_NAME = "mongo-db-test";
   private static final String USERS_COLLECTION = "users";
 
-  private static MongoBuilder mongoBuilder;
+  private static MongoGenerator mongoGenerator;
   private static SessionManagerMongo sessionManager;
   private static UserDao userDao;
   private static DBServiceUser dbServiceUser;
 
   @BeforeEach
   void initialize() {
-    try (var mongoClient = MongoClients.create(MONGODB_URL)) {
-      MongoDatabase database = mongoClient.getDatabase(MONGO_DATABASE_NAME);
-      database.drop();
-    }
-    sessionManager = new SessionManagerMongo();
+    sessionManager = new SessionManagerMongo(MONGODB_URL, MONGO_DATABASE_NAME);
     userDao = new UserDaoMongo(sessionManager);
     dbServiceUser = new DbServiceUserImpl(userDao);
+    mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
   }
 
   @DisplayName(("User create and select"))
