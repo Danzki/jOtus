@@ -11,8 +11,8 @@ import java.util.WeakHashMap;
  */
 public class MyCache<K, V> implements HwCache<K, V> {
   //Надо реализовать эти метод
-  Map<K, V> cacheData = new WeakHashMap<>();
-  List<HwListener> listerners = new ArrayList<>();
+  private Map<K, V> cacheData = new WeakHashMap<>();
+  private List<HwListener> listerners = new ArrayList<>();
 
   @Override
   public void put(K key, V value) {
@@ -32,9 +32,6 @@ public class MyCache<K, V> implements HwCache<K, V> {
 
   @Override
   public V get(K key) {
-    for (HwListener listener : listerners) {
-      listener.notify(key, null, "put");
-    }
     return cacheData.get(key);
   }
 

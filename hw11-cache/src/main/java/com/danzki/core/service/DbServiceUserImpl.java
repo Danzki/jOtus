@@ -16,6 +16,7 @@ public class DbServiceUserImpl implements DBServiceUser {
 
   private final UserDao userDao;
   private boolean noCache;
+  private HwCache<String, User> cache = new MyCache<>();
 
   public DbServiceUserImpl(UserDao userDao) {
     this.userDao = userDao;
@@ -26,8 +27,6 @@ public class DbServiceUserImpl implements DBServiceUser {
   public void setNoCache(boolean noCache) {
     this.noCache = noCache;
   }
-
-  HwCache<String, User> cache = new MyCache<>();
 
   @Override
   public long create(User user) {
@@ -65,7 +64,11 @@ public class DbServiceUserImpl implements DBServiceUser {
       sessionManager.beginSession();
       try {
         Optional<User> userOptional = userDao.load(id);
-
+        User loadedUser = userOptional.orElse(userOptional.get());
+        if (!noCache) {
+          cache.addListener(new HwListenerImpl<String, User>(Long.toString(id), loadedUser));
+          cache.put(Long.toString(id), loadedUser);
+        }
         logger.info("user: {}", userOptional.orElse(null));
         return userOptional;
       } catch (Exception e) {
