@@ -35,9 +35,10 @@ public class UserMongoUser extends UserHelper {
   @BeforeEach
   void initialize() {
     sessionManager = new SessionManagerMongo(MONGODB_URL, MONGO_DATABASE_NAME);
+    sessionManager.dropDatabase();
     userDao = new UserDaoMongo(sessionManager);
     dbServiceUser = new DbServiceUserImpl(userDao);
-    mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
+    mongoGenerator = new MongoGeneratorImpl(dbServiceUser);
   }
 
   @DisplayName(("User create and select"))

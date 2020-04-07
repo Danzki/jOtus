@@ -23,9 +23,10 @@ public class DbServiceMongoApp {
 
   public static void main(String[] args) {
     SessionManagerMongo sessionManager = new SessionManagerMongo("mongodb://localhost", "mongo-db-test");
+    sessionManager.dropDatabase();
     UserDao userDao = new UserDaoMongo(sessionManager);
     DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
-    MongoGenerator mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
+    MongoGenerator mongoGenerator = new MongoGeneratorImpl(dbServiceUser);
 
     var user = new User( "UserName", 30, "user1", "11111");
 

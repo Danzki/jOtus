@@ -35,9 +35,10 @@ public class WebServerApp {
 
   public static void main(String[] args) throws Exception {
     SessionManagerMongo sessionManager = new SessionManagerMongo("mongodb://localhost", "mongo-db-test");
+    sessionManager.dropDatabase();
     UserDao userDao = new UserDaoMongo(sessionManager);
     DBServiceUser dbServiceUser = new DbServiceUserImpl(userDao);
-    MongoGenerator mongoGenerator = new MongoGeneratorImpl(sessionManager, dbServiceUser);
+    MongoGenerator mongoGenerator = new MongoGeneratorImpl(dbServiceUser);
 
     mongoGenerator.generateUsers();
 

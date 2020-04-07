@@ -21,6 +21,16 @@ public class SessionManagerMongo implements SessionManager {
     return database;
   }
 
+  public void dropDatabase() {
+    try {
+      databaseSession = new DatabaseSessionMongo(MongoClients.create(this.dbUrl));
+      database = databaseSession.getMongoClient().getDatabase(this.dbName);
+      database.drop();
+    }  catch (Exception e) {
+      throw new SessionManagerException(e);
+    }
+  }
+
   public String getDbUrl() {
     return dbUrl;
   }
