@@ -25,10 +25,8 @@ public class User {
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<PhoneDataSet> phones = new ArrayList<>();
 
-
   public User() {
   }
-
   public void setAddressDataSet(AddressDataSet addressDataSet) {
     this.addressDataSet = addressDataSet;
   }
