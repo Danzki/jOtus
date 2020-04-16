@@ -3,12 +3,14 @@ package com.danzki.generators;
 import com.danzki.core.model.User;
 import com.danzki.core.service.DBServiceUser;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MongoGeneratorImpl implements MongoGenerator{
-
+  private static Logger logger = LoggerFactory.getLogger(MongoGeneratorImpl.class);
   private DBServiceUser dbServiceUser;
 
   public MongoGeneratorImpl(DBServiceUser dbServiceUser) {
@@ -18,6 +20,7 @@ public class MongoGeneratorImpl implements MongoGenerator{
   @Override
   @Bean
   public void generateUsers() {
+    logger.info("generateUsers");
     String password = new PasswordService().generatePassword();
     generateUser("Admin", 50, "admin", "admin");
     generateUser( "Крис Гир", 30, "user1", password);

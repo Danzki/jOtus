@@ -35,6 +35,14 @@ public class User {
     this.password = password;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
   public static class UserBuilder {
     private String name;
     private int age;

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class DbServiceUserImpl implements DBServiceUser {
@@ -30,16 +29,16 @@ public class DbServiceUserImpl implements DBServiceUser {
   }
 
   @Override
-  public Optional<User> load(ObjectId id) {
-    Optional<User> userOptional = userDao.load(id);
-    logger.info("user: {}", userOptional.orElse(null));
+  public User load(ObjectId id) {
+    User userOptional = userDao.load(id);
+    logger.info("user: {}", userDao);
     return userOptional;
   }
 
   @Override
-  public Optional<User> findByLogin(String login) {
-    Optional<User> userOptional = userDao.findByLogin(login);
-    logger.info("user: {}", userOptional.orElse(null));
+  public User findByLogin(String login) {
+    User userOptional = userDao.findByLogin(login);
+    logger.info("user: {}", userOptional);
     return userOptional;
   }
 
