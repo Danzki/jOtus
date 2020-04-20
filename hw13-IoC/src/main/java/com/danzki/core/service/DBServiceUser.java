@@ -11,4 +11,5 @@ public interface DBServiceUser {
   User load(ObjectId id);
   User findByLogin(String login);
   List<User> findAll();
+  void dropDatabase();
 }

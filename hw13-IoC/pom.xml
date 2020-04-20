@@ -67,11 +67,6 @@
       <artifactId>logback-classic</artifactId>
       <version>1.2.3</version>
     </dependency>
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-core</artifactId>
-      <version>1.2.3</version>
-    </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -96,12 +91,6 @@
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf-spring5</artifactId>
       <version>${thymeleaf.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>mongo-java-driver</artifactId>
-      <version>${mongo.version}</version>
     </dependency>
 
     <dependency>

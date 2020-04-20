@@ -88,9 +88,9 @@ public class User {
   @Override
   public String toString() {
     return "User{" +
-        "_id=" + _id.toString() +
         ", name='" + name + '\'' +
         ", age='" + age + '\'' +
+        ", login='" + login + '\'' +
         '}';
   }
 }

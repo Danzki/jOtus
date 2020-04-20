@@ -13,4 +13,5 @@ public interface UserDao {
   User load(ObjectId id);
   User findByLogin(String login);
   List<User> findAll();
+  void dropDatabase();
 }

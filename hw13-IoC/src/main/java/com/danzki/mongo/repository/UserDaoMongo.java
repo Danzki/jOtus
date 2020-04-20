@@ -26,6 +26,10 @@ public class UserDaoMongo implements UserDao {
   @Autowired
   private MongoConfig mongoConfig;
 
+  public UserDaoMongo(MongoConfig mongoConfig) {
+    this.mongoConfig = mongoConfig;
+  }
+
   @Override
   public SessionManager getSessionManager() {
     return null;
@@ -38,7 +42,6 @@ public class UserDaoMongo implements UserDao {
       var user1 = mongoTemplate.insert(user);
       return user1.get_id();
     } catch (Exception e) {
-      logger.error(e.getMessage(), e);
       throw new UserDaoException(e);
     }
   }
@@ -51,7 +54,7 @@ public class UserDaoMongo implements UserDao {
       var mongoTemplate = new MongoTemplate(MongoClients.create(mongoConfig.getUrl()), mongoConfig.getDatabaseName());
       return mongoTemplate.findOne(query, User.class);
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.info(e.toString());
     }
     return null;
   }
@@ -78,5 +81,10 @@ public class UserDaoMongo implements UserDao {
       e.printStackTrace();
     }
     return new ArrayList<>();
+  }
+
+  @Override
+  public void dropDatabase() {
+    MongoClients.create(mongoConfig.getUrl()).getDatabase(mongoConfig.getDatabaseName()).drop();
   }
 }

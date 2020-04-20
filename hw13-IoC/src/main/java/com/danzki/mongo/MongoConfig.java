@@ -32,7 +32,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
   @Override
   @Bean
   public MongoClient mongoClient() {
-    logger.info("mongoClient");
     return MongoClients.create(this.url);
   }
 
@@ -42,7 +41,6 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
 
   @Bean
   public MongoTemplate mongoTemplate() {
-    logger.info("mongoTemplate");
     return new MongoTemplate(mongoDbFactory());
   }
 
