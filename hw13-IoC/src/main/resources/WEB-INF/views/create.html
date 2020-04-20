@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Page</title>
+</head>
+<body>
+
+<h4>Создать пользователя</h4>
+<form id="create-form" th:action="@{/user/save}" th:object="${user}" th:method="post" accept-charset="utf-8">
+  <div class="row">
+    <label for="name-input">Name:</label>
+    <input id="name-input" name="name" type="text" th:value="${user.name}" value="John Doe"/>
+    </br>
+    <label for="age-input">Age:</label>
+    <input id="age-input" name="age" type="text" th:value="${user.age}" value="30"/>
+    </br>
+    <label for="login-input">Login:</label>
+    <input id="login-input" name="login" type="text" th:value="${user.login}" value="30"/>
+    </br>
+  </div>
+
+  <div class="row">
+    <button type="submit">Save</button>
+  </div>
+</form>
+<a th:href="@{/user/list}" href="userList.html">Назад</a>
+</body>
+</html>
