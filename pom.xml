@@ -33,6 +33,9 @@
     <module>hw10-Hibernate</module>
     <module>hw11-cache</module>
     <module>hw12-web</module>
+    <module>hw13-IoC</module>
+    <module>hw14-sequience</module>
+    <module>hw15-messageSystem</module>
   </modules>
 
   <properties>
