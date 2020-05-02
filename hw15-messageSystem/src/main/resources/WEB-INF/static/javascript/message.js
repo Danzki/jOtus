@@ -30,9 +30,9 @@ const disconnect = () => {
 
 const sendMessage = () => {
   let newUser = {
-    name: $("name").val,
-    age: $("age").val,
-    login: $("login").val,
+    name: $("#name").val,
+    age: $("#age").val,
+    login: $("#login").val
   };
   stompClient.send("/app/userSaveMessage", {}, JSON.stringify({'messageStr': newUser}));
 }
@@ -41,7 +41,6 @@ const sendMessage = () => {
 const showUserList = (jsonUser) => {
   let userTbl = '';
   userTbl += '<tr>';
-  userTbl += '<td>' + jsonUser.id + '</td>';
   userTbl += '<td>' + jsonUser.name + '</td>';
   userTbl += '<td>' + jsonUser.age + '</td>';
   userTbl += '<td>' + jsonUser.login + '</td>';

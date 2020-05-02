@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
 @ComponentScan("com.danzki")
 public class MongoConfig extends AbstractMongoClientConfiguration {
-  private static Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
+  private static Logger logger = LoggerFactory.getLogger(MongoConfig.class);
 
   @Value("${mongo.dbname}")
   private String databaseName;

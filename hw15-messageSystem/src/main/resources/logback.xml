@@ -2,7 +2,7 @@
   <jmxConfigurator/>
 
   <appender name="APP_LOG" class="ch.qos.logback.core.ConsoleAppender">
-    <file>${catalina.base}/logs/mvcapp-${timestamp-by-second}.log</file>
+<!--    <file>/logs/ms-app-${timestamp-by-second}.log</file>-->
     <encoder>
       <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
       <outputPatternAsHeader>true</outputPatternAsHeader>
@@ -18,6 +18,18 @@
   </logger>
 
   <logger name="com.danzki.backend.mongo.repository.UserDaoMongo" level="info" additivity="true">
+    <appender-ref ref="APP_LOG"/>
+  </logger>
+
+  <logger name="com.danzki.configuration.WebAppInitializer" level="info" additivity="true">
+    <appender-ref ref="APP_LOG"/>
+  </logger>
+
+  <logger name="com.danzki.messagesystem.MessageSystemImpl" level="info" additivity="true">
+    <appender-ref ref="APP_LOG"/>
+  </logger>
+
+  <logger name="com.danzki.messagesystem.MsClientImpl" level="info" additivity="true">
     <appender-ref ref="APP_LOG"/>
   </logger>
 

@@ -1,6 +1,5 @@
 package com.danzki.controllers;
 
-import com.danzki.backend.mongo.repository.UserDaoMongo;
 import com.danzki.core.model.User;
 import com.danzki.core.service.DBServiceUser;
 import com.danzki.front.FrontendService;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Controller
 public class UserController {
-  private static Logger logger = LoggerFactory.getLogger(UserDaoMongo.class);
+  private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
   private final DBServiceUser dbServiceUser;
   private final FrontendService frontendService;
