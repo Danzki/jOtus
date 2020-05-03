@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Page</title>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+<h4>Список пользователей</h4>
+<a th:href="@{/user/create}" href="create.html">Создать пользователя</a>
+
+<table class="table table-striped">
+  <thead class="thead-light">
+  <tr>
+    <td scope="col">Имя</td>
+    <td scope="col">Возраст</td>
+    <td scope="col">Логин</td>
+  </tr>
+  </thead>
+  <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.name}">...</td>
+      <td th:text="${user.age}">...</td>
+      <td th:text="${user.login}">...</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
