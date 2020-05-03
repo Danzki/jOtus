@@ -27,7 +27,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import javax.annotation.PostConstruct;
 
 @Configuration
-@ComponentScan("com.danzki")
+@ComponentScan
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
   private static Logger logger = LoggerFactory.getLogger(WebConfig.class);

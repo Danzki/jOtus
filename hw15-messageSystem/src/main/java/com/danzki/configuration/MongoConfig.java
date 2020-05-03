@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @Configuration
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class, MongoRepositoriesAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @PropertySources(value = {@PropertySource("classpath:application.properties")})
-@ComponentScan("com.danzki")
+@ComponentScan
 public class MongoConfig extends AbstractMongoClientConfiguration {
   private static Logger logger = LoggerFactory.getLogger(MongoConfig.class);
 
