@@ -1,9 +1,9 @@
 package com.danzki.service.handlers;
 
-import com.danzki.messagesystem.common.Serializers;
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.RequestHandler;
+import com.danzki.messageSystem.common.Serializers;
 import com.danzki.service.FrontendService;
-import com.danzki.messagesystem.Message;
-import com.danzki.messagesystem.RequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.danzki.messagesystem;
+package com.danzki.messageSystem;
 
 public enum MessageType {
     USER_DATA("UserData");

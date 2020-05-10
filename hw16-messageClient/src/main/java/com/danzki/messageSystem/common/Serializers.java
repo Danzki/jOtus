@@ -1,4 +1,4 @@
-package com.danzki.messagesystem.common;
+package com.danzki.messageSystem.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,6 @@ public class Serializers {
     private static final Logger logger = LoggerFactory.getLogger(Serializers.class);
 
     private Serializers() {
-
     }
 
     public static byte[] serialize(Object data) {

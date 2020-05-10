@@ -1,6 +1,6 @@
 package com.danzki.socket;
 
-import com.danzki.messagesystem.Message;
+import com.danzki.messageSystem.Message;
 import com.danzki.service.FrontendService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

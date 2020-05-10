@@ -2,9 +2,9 @@ package com.danzki.configuration;
 
 import com.danzki.backend.mongo.handlers.GetUserDataRequestHandler;
 import com.danzki.core.service.DBServiceUser;
+import com.danzki.messageSystem.MessageType;
+import com.danzki.messageSystem.MsClient;
 import com.danzki.messagesystem.DBMsClientImpl;
-import com.danzki.messagesystem.MessageType;
-import com.danzki.messagesystem.MsClient;
 import com.danzki.socket.SocketClientDBServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

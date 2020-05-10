@@ -1,4 +1,4 @@
-package com.danzki.messagesystem;
+package com.danzki.messageSystem;
 
 
 import java.util.Optional;

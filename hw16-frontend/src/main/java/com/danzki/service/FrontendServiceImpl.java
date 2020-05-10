@@ -1,9 +1,9 @@
 package com.danzki.service;
 
-import com.danzki.messagesystem.Message;
-import com.danzki.messagesystem.MessageType;
-import com.danzki.messagesystem.MsClient;
-import com.danzki.messagesystem.common.Serializers;
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.MessageType;
+import com.danzki.messageSystem.MsClient;
+import com.danzki.messageSystem.common.Serializers;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.slf4j.Logger;

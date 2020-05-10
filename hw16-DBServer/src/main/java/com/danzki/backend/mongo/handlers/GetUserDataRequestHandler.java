@@ -1,12 +1,12 @@
 package com.danzki.backend.mongo.handlers;
 
 
-import com.danzki.messagesystem.common.Serializers;
 import com.danzki.core.model.User;
 import com.danzki.core.service.DBServiceUser;
-import com.danzki.messagesystem.Message;
-import com.danzki.messagesystem.MessageType;
-import com.danzki.messagesystem.RequestHandler;
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.MessageType;
+import com.danzki.messageSystem.RequestHandler;
+import com.danzki.messageSystem.common.Serializers;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;

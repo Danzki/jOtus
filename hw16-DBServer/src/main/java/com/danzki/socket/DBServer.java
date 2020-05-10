@@ -1,7 +1,7 @@
 package com.danzki.socket;
 
-import com.danzki.messagesystem.Message;
-import com.danzki.messagesystem.MsClient;
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.MsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

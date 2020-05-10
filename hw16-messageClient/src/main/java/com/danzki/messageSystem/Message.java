@@ -1,11 +1,15 @@
-package com.danzki.messagesystem;
+package com.danzki.messageSystem;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 public class Message {
-    static final Message VOID_MESSAGE = new Message();
+  public static Message getVoidMessage() {
+    return VOID_MESSAGE;
+  }
+
+  static final Message VOID_MESSAGE = new Message();
 
     private final UUID id = UUID.randomUUID();
     private final String from;

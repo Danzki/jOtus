@@ -1,5 +1,8 @@
 package com.danzki.messagesystem;
 
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.MsClient;
+
 public interface MessageSystem {
 
     void addClient(MsClient msClient);

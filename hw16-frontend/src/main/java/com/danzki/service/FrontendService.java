@@ -1,7 +1,7 @@
 package com.danzki.service;
 
 
-import com.danzki.messagesystem.Message;
+import com.danzki.messageSystem.Message;
 
 import java.util.Optional;
 import java.util.UUID;

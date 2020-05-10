@@ -1,7 +1,7 @@
-package com.danzki.messagesystem.config;
+package com.danzki.config;
 
+import com.danzki.messageSystem.MsClient;
 import com.danzki.messagesystem.MessageSystem;
-import com.danzki.messagesystem.MsClient;
 import com.danzki.messagesystem.MsClientImpl;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

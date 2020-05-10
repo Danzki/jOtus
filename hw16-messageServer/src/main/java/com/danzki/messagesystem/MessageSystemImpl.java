@@ -1,5 +1,7 @@
 package com.danzki.messagesystem;
 
+import com.danzki.messageSystem.Message;
+import com.danzki.messageSystem.MsClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -110,7 +112,7 @@ public final class MessageSystemImpl implements MessageSystem {
         while (runFlag.get() || !messageQueue.isEmpty()) {
             try {
                 Message msg = messageQueue.take();
-                if (msg == Message.VOID_MESSAGE) {
+                if (msg == Message.getVoidMessage()) {
                     logger.info("received the stop message");
                 } else {
                     MsClient clientTo = clientMap.get(msg.getTo());
@@ -151,10 +153,10 @@ public final class MessageSystemImpl implements MessageSystem {
     }
 
     private void insertStopMessage() throws InterruptedException {
-        boolean result = messageQueue.offer(Message.VOID_MESSAGE);
+        boolean result = messageQueue.offer(Message.getVoidMessage());
         while (!result) {
             Thread.sleep(100);
-            result = messageQueue.offer(Message.VOID_MESSAGE);
+            result = messageQueue.offer(Message.getVoidMessage());
         }
     }
 
