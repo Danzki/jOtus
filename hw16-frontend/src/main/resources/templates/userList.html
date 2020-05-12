@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Page</title>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+  <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+  <script th:src="@{/javascript/userListScr.js}"></script>
+</head>
+
+<body>
+<h4>Список пользователей</h4>
+<a th:href="@{/user/create}" href="create.html">Создать пользователя</a>
+
+<table class="table table-striped" id="usersList">
+  <thead class="thead-light">
+  <tr>
+    <td scope="col">Имя</td>
+    <td scope="col">Возраст</td>
+    <td scope="col">Логин</td>
+  </tr>
+  </thead>
+  <tbody id="usersListTbl"></tbody>
+</table>
+</body>
+</html>
