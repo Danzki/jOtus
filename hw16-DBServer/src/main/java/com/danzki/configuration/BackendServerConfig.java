@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
-public class DBConfig {
-  private static Logger logger = LoggerFactory.getLogger(DBConfig.class);
+public class BackendServerConfig {
+  private static Logger logger = LoggerFactory.getLogger(BackendServerConfig.class);
 
   private final ApplicationContext applicationContext;
 
@@ -29,7 +29,7 @@ public class DBConfig {
   @Value("${dbserver.name}")
   private String databaseService;
 
-  public DBConfig(ApplicationContext applicationContext) {
+  public BackendServerConfig(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
   }
 

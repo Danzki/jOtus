@@ -127,9 +127,7 @@
     <dependency>
       <groupId>com.danzki</groupId>
       <artifactId>hw16-messageClient</artifactId>
-      <version>2019-12-SNAPSHOT</version>
-      <scope>system</scope>
-      <systemPath>${libs.path}/messageClient-2019-12-SNAPSHOT.jar</systemPath>
+      <version>1.0</version>
     </dependency>
     <!--endregion-->
   </dependencies>

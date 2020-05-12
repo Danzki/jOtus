@@ -3,23 +3,25 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <artifactId>otus-java</artifactId>
-    <groupId>com.danzki</groupId>
-    <version>${revision}</version>
-  </parent>
+  <!--  <parent>-->
+  <!--    <artifactId>otus-java</artifactId>-->
+  <!--    <groupId>com.danzki</groupId>-->
+  <!--    <version>${revision}</version>-->
+  <!--  </parent>-->
 
+  <groupId>com.danzki</groupId>
   <artifactId>hw16-messageClient</artifactId>
+  <version>1.0</version>
 
   <packaging>jar</packaging>
-  <name>messageClient-${revision}</name>
+  <name>messageClient-1.1</name>
 
-<!--  <parent>-->
-<!--    <groupId>org.springframework.boot</groupId>-->
-<!--    <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--    <version>2.2.6.RELEASE</version>-->
-<!--    <relativePath/>-->
-<!--  </parent>-->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.6.RELEASE</version>
+    <relativePath/>
+  </parent>
 
   <properties>
     <maven.compiler.source>11</maven.compiler.source>
@@ -51,28 +53,6 @@
     </dependency>
     <!--endregion-->
   </dependencies>
-
-  <repositories>
-    <repository>
-      <id>spring-snapshots</id>
-      <url>http://repo.spring.io/snapshot</url>
-      <snapshots><enabled>true</enabled></snapshots>
-    </repository>
-    <repository>
-      <id>spring-milestones</id>
-      <url>http://repo.spring.io/milestone</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-snapshots</id>
-      <url>http://repo.spring.io/snapshot</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <url>http://repo.spring.io/milestone</url>
-    </pluginRepository>
-  </pluginRepositories>
 
   <build>
     <finalName>${project.name}</finalName>
