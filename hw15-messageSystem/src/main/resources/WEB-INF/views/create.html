@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Admin Page</title>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
+  <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
+  <script th:src="@{/javascript/message.js}"></script>
+</head>
+<body>
+
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+  enabled. Please enable
+  Javascript and reload this page!</h2></noscript>
+
+<div class="container">
+  <h4>Создать пользователя</h4>
+  <hr>
+  <form action="#" accept-charset="UTF-8">
+    <div class="row">
+      <label for="name" class="la">Name:</label>
+      <input id="name" class="form-control" type="text" placeholder="Name"/>
+      </br>
+      <label for="age">Age:</label>
+      <input id="age" class="form-control" type="text" placeholder="Age"/>
+      </br>
+      <label for="login">Login:</label>
+      <input id="login" class="form-control" type="text" placeholder="Login"/>
+      </br>
+    </div>
+
+    <div class="row">
+      <button type="submit" id="saveUserButton" class="btn btn-info col-2">Save</button>
+    </div>
+  </form>
+
+  <h3>Список новых добавленных пользователей</h3>
+
+  <table class="table table-striped" id="usersList">
+    <thead class="thead-light">
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Login</th>
+    </tr>
+    </thead>
+    <tbody id="userList"></tbody>
+  </table>
+
+  <a th:href="@{/user/list}" href="userList.html">Назад</a>
+</div>
+</body>
+</html>
