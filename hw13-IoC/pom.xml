@@ -24,7 +24,7 @@
     <spring.version>5.2.5.RELEASE</spring.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <mongo.version>3.12.1</mongo.version>
-    <jackson.version>2.9.10.4</jackson.version>
+    <jackson.version>2.9.10.7</jackson.version>
     <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
   </properties>
 
