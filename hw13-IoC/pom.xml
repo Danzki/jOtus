@@ -21,7 +21,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <spring.version>5.2.5.RELEASE</spring.version>
+    <spring.version>5.3.18</spring.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <mongo.version>3.12.1</mongo.version>
     <jackson.version>2.9.10.4</jackson.version>
