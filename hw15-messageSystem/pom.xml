@@ -17,7 +17,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <apache.common.lang3.version>3.9</apache.common.lang3.version>
     <logback-classic.version>1.2.3</logback-classic.version>
-    <spring.version>5.2.5.RELEASE</spring.version>
+    <spring.version>5.2.22.RELEASE</spring.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <bootstrap.version>4.4.1-1</bootstrap.version>
     <mongo.version>3.12.1</mongo.version>
